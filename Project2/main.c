@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 int main(void) {
-    printf("c1\tc2\tc3\tc4\tc5\tc6\tc7\n");
+    printf("c1\tc2\tc3\tc4\tc5\tc6\tc7\n\n");
     printf("\t\t\t\t\t\t\t\t[]\tf1\n");
     printf("\t\t\t\t\t\t\t\t\n");
     printf("\t\t\t\t\t\t\t\t[]\tf2\n");

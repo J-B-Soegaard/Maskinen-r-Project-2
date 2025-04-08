@@ -3,5 +3,6 @@
 //
 #ifndef COMMANDS_H
 #define COMMANDS_H
+int LD(char filename[]);
 
 #endif //COMMANDS_H
