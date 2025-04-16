@@ -1,14 +1,53 @@
 #include <stdio.h>
 #include <string.h>
-
-int LD(char fileName[])
+#include "stdlib.h"
+//-----
+typedef struct node {  // struct til at lave linked list med kortene
+    char value[3];
+    struct node *next; // bevæger kun 1 pointer til at pege frem ikke nogen til at pege tilbage
+}node;
+node deck;
+//------------------
+void createCard(node** root, char value[3]);
+void LD(char fileName[])
 {
-    FILE *fp = fopen(fileName, "r");
-    if (fp == NULL){
+    char temp[3];
+    FILE *fp;
+
+    fp = fopen(fileName, "r");
+
+    if (fp == NULL)
+    {
+        printf("File not found\n");
         FILE *fp = fopen("unshuffled.txt", "r"); // hvis ikke den der er givet en rigtigt fil navn så tag den det deck der sorteret.
     }
-}
+    while (fgets(temp, 3, fp)!=NULL) {
+        createCard(&deck, temp);
 
+    }
+    fclose(fp);
+
+}
+//------------------
+
+void createCard(node** root, char value[3]) { // tænker vi kan har 7 "roots" for hver søjle så vi kan genbruge koden til playphase til startup phase behøver vi kun "deck"
+    node* new_node = malloc(sizeof(node)); // laver plads i memory til det nye kort
+    new_node->next = NULL;
+    strncpy(new_node->value, value, 2);  // sætter værdi til den give string
+    new_node->value[2] = '\0';
+
+    // Check if the list is empty (root is NULL)
+    if (*root == NULL) {  // sikker at curr ikke starter med at være null
+        *root = new_node;
+    } else {
+        node* curr = *root;
+        while (curr->next != NULL) {  // loop igennem til den finder det sidste element
+            curr = curr->next;
+        }
+        curr->next = new_node; // tilføjer det nye element
+    }
+}
+//----------------
 int CHECK()
 {
     int card_count = 0;
