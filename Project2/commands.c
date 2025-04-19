@@ -22,14 +22,14 @@ void LD(char fileName[])
 
 
 
-fp = fopen(fileName, "r");
+fp = fopen(fileName, "r"); // åbner filen
 
     if (fp == NULL)
     {
         FILE *fp = fopen("unshuffled.txt", "r"); // hvis ikke den der er givet en rigtigt fil navn så tag den det deck der sorteret.
     }
     while (fgets(temp, 4, fp)!=NULL) {
-        createCard(&deck, temp);
+        createCard(&deck, temp); // laver alle kortene og linker dem til deck
 
     }
     fclose(fp);
@@ -60,19 +60,19 @@ void createCard(node** root, char value[4]) {
 //--
 void createBoard(void) { // fungere kun til startup phase
     printf("\nc1\tc2\tc3\tc4\tc5\tc6\tc7\n\n");
-    int counter = 0;
-    int fCounter = 1;
-    int numberF=0;
+    int counter = 0; // hver 7 skal den lave ny linje
+    int fCounter = 1; // sætter f på de rigtige steder
+    int numberF=0;  // +1 hver gang f bliver sat så vi får f1,f2,f3,f4
     for (node* curr = deck; curr != NULL; curr = curr->next) {
         if (curr->isHidden == 1) {
-            printf("%s", curr->value);
+            printf("%s", curr->value); // hvis kortet vender op ad
         }else {
-            printf("[]");
+            printf("[]"); // hvis kortet vender ned af
         }
         printf("\t");
         counter++;
 
-        if (counter == 7) {
+        if (counter == 7) {  // ny linje hver 7 søjle.
             if (fCounter == 1|| fCounter == 3|| fCounter == 5|| fCounter == 7)
             {
                 numberF++;
@@ -89,7 +89,7 @@ void createBoard(void) { // fungere kun til startup phase
 printf("\n");
 }
 //--
-void SW() {
+void SW() { // viser alle kortene
     node* curr = deck;
     while ( curr != NULL) {
         curr->isHidden = 1;
