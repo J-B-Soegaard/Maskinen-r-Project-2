@@ -9,6 +9,7 @@
 int main(void) {
     char message[] = "message:\n";
     char lastCmd[3];
+    strcpy(lastCmd, "");
 
     printf("c1\tc2\tc3\tc4\tc5\tc6\tc7\n\n");
     printf("\t\t\t\t\t\t\t\t[]\tf1\n");
@@ -29,7 +30,7 @@ int main(void) {
 
         scanf("%4s", command);
         if ((command[0]=='l'&&command[1]=='d')||(command[0]=='L'&&command[1]=='D')) {
-    strcpy(lastCmd, "ld"); //
+    strcpy(lastCmd, "LD"); //
             //char filename[50];
             //scanf("%s", filename);
 LD("/Users/jacobsoegaard/CLionProjects/Test/test.txt");
@@ -43,6 +44,10 @@ LD("/Users/jacobsoegaard/CLionProjects/Test/test.txt");
 //--
         if (command[0]=='S'&&command[1]=='W') {     // command til vise all kort
         SW();
+            strcpy(lastCmd, "SW");
+            printf("last command:%s\n",lastCmd);
+            printf("%s", &message[0]);
+            printf("input >");
         }
 
 //--
