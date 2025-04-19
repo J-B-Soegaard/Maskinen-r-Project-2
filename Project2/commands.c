@@ -1,53 +1,103 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
-#include "stdlib.h"
+
 //-----
+
 typedef struct node {  // struct til at lave linked list med kortene
     char value[3];
     struct node *next; // bevæger kun 1 pointer til at pege frem ikke nogen til at pege tilbage
+    int isHidden; // om kortet er oppe eller nede
 }node;
-node deck;
+
+node* deck = NULL;  //global fil tror jeg
+
 //------------------
 void createCard(node** root, char value[3]);
 void LD(char fileName[])
 {
-    char temp[3];
+    char temp[4];
     FILE *fp;
 
-    fp = fopen(fileName, "r");
+
+
+
+fp = fopen(fileName, "r");
 
     if (fp == NULL)
     {
-        printf("File not found\n");
         FILE *fp = fopen("unshuffled.txt", "r"); // hvis ikke den der er givet en rigtigt fil navn så tag den det deck der sorteret.
     }
-    while (fgets(temp, 3, fp)!=NULL) {
+    while (fgets(temp, 4, fp)!=NULL) {
         createCard(&deck, temp);
 
     }
     fclose(fp);
 
+
 }
 //------------------
 
-void createCard(node** root, char value[3]) { // tænker vi kan har 7 "roots" for hver søjle så vi kan genbruge koden til playphase til startup phase behøver vi kun "deck"
-    node* new_node = malloc(sizeof(node)); // laver plads i memory til det nye kort
+void createCard(node** root, char value[4]) {
+    node* new_node = malloc(sizeof(node));
     new_node->next = NULL;
-    strncpy(new_node->value, value, 2);  // sætter værdi til den give string
+    strncpy(new_node->value, value, 2);
     new_node->value[2] = '\0';
+    new_node->isHidden = 0;
 
     // Check if the list is empty (root is NULL)
-    if (*root == NULL) {  // sikker at curr ikke starter med at være null
+    if (*root == NULL) {
         *root = new_node;
     } else {
         node* curr = *root;
-        while (curr->next != NULL) {  // loop igennem til den finder det sidste element
+        while (curr->next != NULL) {
             curr = curr->next;
         }
-        curr->next = new_node; // tilføjer det nye element
+        curr->next = new_node;
     }
 }
 //----------------
+//--
+void createBoard(void) { // fungere kun til startup phase
+    printf("\nc1\tc2\tc3\tc4\tc5\tc6\tc7\n\n");
+    int counter = 0;
+    int fCounter = 1;
+    int numberF=0;
+    for (node* curr = deck; curr != NULL; curr = curr->next) {
+        if (curr->isHidden == 1) {
+            printf("%s", curr->value);
+        }else {
+            printf("[]");
+        }
+        printf("\t");
+        counter++;
+
+        if (counter == 7) {
+            if (fCounter == 1|| fCounter == 3|| fCounter == 5|| fCounter == 7)
+            {
+                numberF++;
+                printf("\t\t[]\tf%d", numberF);
+
+            }
+
+            printf("\n");
+            counter = 0;
+            fCounter++;
+        }
+
+    }
+
+}
+//--
+void SW() {
+    node* curr = deck;
+    while ( curr != NULL) {
+        curr->isHidden = 1;
+        curr=curr->next;
+    }
+    createBoard();
+}
+//---------------
 int CHECK()
 {
     int card_count = 0;

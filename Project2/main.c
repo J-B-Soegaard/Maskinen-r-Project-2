@@ -1,11 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
-
-#include "commands.h"
 #include <string.h>
-
+#include "commands.h"
 
 #define node deck;
+
+
 int main(void) {
     char message[] = "message:\n";
     char lastCmd[3];
@@ -27,16 +27,24 @@ int main(void) {
 //---
         char command[3];
 
-        scanf("%2s", command);
+        scanf("%4s", command);
         if ((command[0]=='l'&&command[1]=='d')||(command[0]=='L'&&command[1]=='D')) {
     strcpy(lastCmd, "ld"); //
-            char filename[50];
-            scanf("%s", filename);
+            //char filename[50];
+            //scanf("%s", filename);
+LD("/Users/jacobsoegaard/CLionProjects/Test/test.txt");
+            createBoard();
             // ld(filename)
 
         }
 //--
+        if (command[0]=='S'&&command[1]=='W') {     // command til vise all kort
+        SW();
+        }
+
+//--
         if (command[0]=='Q'&&command[1]=='Q') { // command til at lukke program
+            printf("Quit the program");
             exit(0);
         }
 //--
