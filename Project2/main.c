@@ -34,6 +34,9 @@ int main(void) {
             //scanf("%s", filename);
 LD("/Users/jacobsoegaard/CLionProjects/Test/test.txt");
             createBoard();
+            printf("last command:%s\n",lastCmd);
+            printf("%s", &message[0]);
+            printf("input >");
             // ld(filename)
 
         }
