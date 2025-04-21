@@ -98,6 +98,19 @@ void SW() { // viser alle kortene
     createBoard();
 }
 //---------------
+void saveCard(node** root,char name[255]) {
+    if (name == NULL) {
+        name = "cards.txt";
+    }
+    FILE *fp = fopen(name, "w");
+    node* curr = *root;
+    while (curr != NULL) {
+        fprintf(fp, "%s\n", curr->value);
+        curr = curr->next;
+    }
+    fclose(fp);
+}
+//---------------
 int CHECK()
 {
     int card_count = 0;
