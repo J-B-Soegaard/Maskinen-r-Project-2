@@ -98,15 +98,15 @@ void SW() { // viser alle kortene
     createBoard();
 }
 //---------------
-void saveCard(node** root,char name[255]) {
+void saveCard(node** root,char name[255]) { 
     if (name == NULL) {
-        name = "cards.txt";
+        name = "cards.txt"; // hvis filen ikke får et navn
     }
     FILE *fp = fopen(name, "w");
     node* curr = *root;
-    while (curr != NULL) {
-        fprintf(fp, "%s\n", curr->value);
-        curr = curr->next;
+    while (curr != NULL) { // decket burde allerede være checket igennem, så derfor ingen behøve for sikkerhed.
+        fprintf(fp, "%s\n", curr->value); //printer værdi i filen.
+        curr = curr->next; //næste værdi
     }
     fclose(fp);
 }
