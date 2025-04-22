@@ -129,7 +129,6 @@ int CHECK(char fileName[])
         all_cards[card_count][2] = '0'; // '0' betyder ikke brugt, '1' betyder allerede brugt (For check af dup kort)
         card_count++;
     }
-
     fclose(file_check);
 
     //Arbejdsplads (Still in the making)
