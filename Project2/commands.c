@@ -120,6 +120,9 @@ int CHECK(char fileName[])
 
     // Åbner vores file unshuffled.txt med alle valid kort
     FILE *file_check = fopen("unshuffled.txt", "r");
+    if (file_check == NULL) {
+        return 4; // Error ved åbning af unshuffled file
+    }
 
     while (fscanf(file_check, "%2s", card) == 1){
       strcpy(all_cards[card_count], card); // Kopier alle kort ind til vores Tjek array
