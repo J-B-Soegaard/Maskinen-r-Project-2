@@ -131,7 +131,37 @@ int CHECK(char fileName[])
     }
     fclose(file_check);
 
-    //Arbejdsplads (Still in the making)
+    if (card_count != 52) {
+        return 5; // Unshuffled.txt har ikke 52 kort (Burde ikke ske i vores setup)
+    }
+
+    // Åben filen vi ville check
+    FILE *fp = fopen(fileName, "r");
+    if (fp == NULL) {
+        return 6; // Error ved åbning af file
+    }
+
+    int input_count = 0;
+
+    while (fscanf(fp, "%2s", card) == 1) {
+        int found = 0;
+        for (i = 0; i < 52; i++) {
+            if (strcmp(card, all_cards[i]) == 0) {
+                found = 1;
+                if (all_cards[i][2] == '1') {
+                    fclose(fp);
+                    return 1; // Duplicate kort fundet
+                } else {
+                    all_cards[i][2] = '1'; // Markere kortet som brugt
+                    break;
+                }
+            }
+        }
+
+        if (!found) {
+            fclose(fp);
+            return 3; // Ikke rigtigt kort (Ikke Valid kort fundet)
+        }
 
   return 0; //No error
 }
