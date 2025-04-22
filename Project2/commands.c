@@ -118,6 +118,7 @@ int CHECK(char fileName[])
     char all_cards[52][4];              // Valid kort array + et slot for at tjekke for duplicate kort
     int i, j;
 
+    // Åbner vores file unshuffled.txt med alle valid kort
     FILE *file_check = fopen("unshuffled.txt", "r");
 
     while (fscanf(file_check, "%2s", card) == 1){
