@@ -111,7 +111,7 @@ void saveCard(node** root,char name[255]) {
     fclose(fp);
 }
 //---------------
-int CHECK()
+int CHECK(char fileName[])
 {
     int card_count = 0;
     char card[3];                // 3, 2 for char + 1 for Null (ny linje)
