@@ -163,5 +163,31 @@ int CHECK(char fileName[])
             return 3; // Ikke rigtigt kort (Ikke Valid kort fundet)
         }
 
-  return 0; //No error
+        input_count++;
+        if (input_count > 52) {
+            fclose(fp);
+            return 2; // For mange kort (over 52 kort)
+        }
+    }
+
+    fclose(fp);
+
+    if (input_count < 52) {
+        return 7; // Ikke nok kort ( mindre ind 52 kort )
+    }
+
+    return 0; // Alt Ok (Valid deck)
+
+    // Error code liste:
+    // 0 = Ingen problemer
+    // 1 = Duplicate kort
+    // 2 = For mange kort
+    // 3 = invalid kort (Kort eksistere ikke eller ikke rigtig format)
+    // 4 = Kan ikke åbne unshuffled file
+    // 5 = Unshuffeled har ikke nok kort (burde ikke ske)
+    // 6 = filen vi checker for kan ikke åbnes
+    // 7 = for lidt kort
+
+
+
 }
