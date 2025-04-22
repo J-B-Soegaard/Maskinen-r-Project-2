@@ -124,9 +124,10 @@ int CHECK(char fileName[])
         return 4; // Error ved åbning af unshuffled file
     }
 
-    while (fscanf(file_check, "%2s", card) == 1){
-      strcpy(all_cards[card_count], card); // Kopier alle kort ind til vores Tjek array
-      card_count++;
+    while (fscanf(file_check, "%2s", card) == 1 && card_count < 52) {
+        strcpy(all_cards[card_count], card);
+        all_cards[card_count][2] = '0'; // '0' betyder ikke brugt, '1' betyder allerede brugt (For check af dup kort)
+        card_count++;
     }
 
     fclose(file_check);
