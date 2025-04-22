@@ -114,8 +114,9 @@ void saveCard(node** root,char name[255]) {
 int CHECK(char fileName[])
 {
     int card_count = 0;
-    char card[3];                // 3, 2 for char + 1 for Null (ny linje)
-    char all_cards[52][3];       // Array med 52 kort og 3, 2 for char og 1 for ny linje some bruges til check
+    char card[3];                       // til at læse kort (2 chars + '\0')
+    char all_cards[52][4];              // Valid kort array + et slot for at tjekke for duplicate kort
+    int i, j;
 
     FILE *file_check = fopen("unshuffled.txt", "r");
 
