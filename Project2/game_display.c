@@ -20,3 +20,10 @@ int get_column_height(Node* head) {
     }
     return count;
 }
+
+Node* get_nth_node(Node* head, int n) {
+    for (int i = 0; i < n && head; i++) {
+        head = head->next;
+    }
+    return head;
+}
