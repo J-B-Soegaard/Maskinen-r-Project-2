@@ -28,3 +28,11 @@ Node* get_nth_node(Node* head, int n) {
     }
     return head;
 }
+void display_game(GameState* state) {
+    printf("C1\tC2\tC3\tC4\tC5\tC6\tC7\n");
+
+    int max_rows = 0;
+    for (int i = 0; i < 7; i++) {
+        int h = get_column_height(state->columns[i]);
+        if (h > max_rows) max_rows = h;
+    }
