@@ -126,7 +126,7 @@ int CHECK(char fileName[])
 
     while (fscanf(file_check, "%2s", card) == 1 && card_count < 52) {
         strcpy(all_cards[card_count], card);
-        all_cards[card_count][2] = '0'; // '0' betyder ikke brugt, '1' betyder allerede brugt (For check af dup kort)
+        all_cards[card_count][3] = '0'; // '0' betyder ikke brugt, '1' betyder allerede brugt (For check af dup kort)
         card_count++;
     }
     fclose(file_check);
@@ -148,11 +148,11 @@ int CHECK(char fileName[])
         for (i = 0; i < 52; i++) {
             if (strcmp(card, all_cards[i]) == 0) {
                 found = 1;
-                if (all_cards[i][2] == '1') {
+                if (all_cards[i][3] == '1') {
                     fclose(fp);
                     return 1; // Duplicate kort fundet
                 } else {
-                    all_cards[i][2] = '1'; // Markere kortet som brugt
+                    all_cards[i][3] = '1'; // Markere kortet som brugt
                     break;
                 }
             }
