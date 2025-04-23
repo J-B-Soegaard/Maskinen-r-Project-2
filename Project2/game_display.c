@@ -11,3 +11,12 @@ void print_card(Card card, int visible) {
         printf("%c%c", card.rank, card.suit);
     }
 }
+
+int get_column_height(Node* head) {
+    int count = 0;
+    while (head) {
+        count++;
+        head = head->next;
+    }
+    return count;
+}
