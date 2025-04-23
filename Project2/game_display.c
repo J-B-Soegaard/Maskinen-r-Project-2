@@ -36,3 +36,26 @@ void display_game(GameState* state) {
         int h = get_column_height(state->columns[i]);
         if (h > max_rows) max_rows = h;
     }
+    
+    for (int row = 0; row < max_rows; row++) {
+        for (int col = 0; col < 7; col++) {
+            Node* node = get_nth_node(state->columns[col], row);
+            if (node) {
+                print_card(node->card, node->visible);
+            } else {
+                printf("   ");
+            }
+            printf("\t");
+        }
+        printf("\n");
+    }
+
+    for (int i = 0; i < 4; i++) {
+        printf("[] F%d\t", i + 1);
+    }
+    printf("\n\n");
+
+    printf("LAST Command: %s\n", state->last_cmd);
+    printf("Message: %s\n", state->message);
+    printf("INPUT > ");
+}
