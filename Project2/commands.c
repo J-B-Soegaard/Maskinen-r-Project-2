@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 //-----
 
@@ -126,7 +127,7 @@ int CHECK(char fileName[])
 
     while (fscanf(file_check, "%2s", card) == 1 && card_count < 52) {
         strcpy(all_cards[card_count], card);
-        all_cards[card_count][3] = '0'; // '0' betyder ikke brugt, '1' betyder allerede brugt (For check af dup kort)
+        all_cards[card_count][3] = '0'; // Sætte alle kort til '0' som betyder ikke brugt
         card_count++;
     }
     fclose(file_check);
@@ -189,5 +190,56 @@ int CHECK(char fileName[])
     // 7 = for lidt kort
 
 
+
+}
+
+void SR(node** root) {
+  srand(time(NULL));		// Laver et random seed. Dette gør vi for ny random tal hver gang
+  int x;					// Variable der skal holde vores random tal
+  int Locations = 1;		// Variable	der skal angive hvor mange positioner kortet kan blive lagt ind på
+
+  node* deck_temp=NULL;		// Vores midlertidig pointer der skal holde starten af vores deck
+
+  while (*root != NULL) {	// Bliver ved ind til root deck er tomt
+    x = (rand() % Locations) + 1;	//Tilfældig tal fra 1 til Locations
+
+    // Find top kortet fra vores root deck
+    node* currentCard = *root;
+    node* prev = NULL;
+
+    while (currentCard->next != NULL) {
+      prev = currentCard;
+      currentCard = currentCard->next;
+    }
+
+    if (prev != NULL) {
+      prev->next = NULL;  // Fjern top kort
+    } else {
+      *root = NULL; // Vis der kun er et kort tilbage skal decket være tomt
+    }
+
+    currentCard->next = NULL;
+
+	// Indsætter currentCard i deck_temp på vores random Location x
+    if (deck_temp == NULL || x == 1) {
+      currentCard->next = deck_temp;		// Hvis det nye deck er tomt, eller x == 1, indsættes currentCard forrest
+      deck_temp = currentCard;
+    } else {
+      node* insertPrev = deck_temp;			// Gå frem til den positionen før x (det ønskede lokation)
+      for (int i = 1; i < x - 1; i++) {
+        insertPrev = insertPrev->next;
+      }
+
+      // Indsæt kortet på den ønskede position
+      currentCard->next = insertPrev->next;
+      insertPrev->next = currentCard;
+    }
+
+    Locations++;		// Muligheden af lokationer bliver nu større
+
+  }
+
+  //Husker at udskifte vores temporary pointer med root deckes orginale pointer
+  *root = deck_temp;
 
 }
