@@ -49,7 +49,14 @@ LD("/Users/jacobsoegaard/CLionProjects/Test/test.txt");
             printf("%s", &message[0]);
             printf("input >");
         }
-
+//--
+        if (command[0]=='S'&&command[1]=='R') {     // command til blande indlæst deck
+            SR(&deck);
+            strcpy(lastCmd, "SR");
+            printf("last command:%s\n",lastCmd);
+            printf("%s", &message[0]);
+            printf("input >");
+        }
 //--
         if (command[0]=='Q'&&command[1]=='Q') { // command til at lukke program
             printf("Quit the program");
