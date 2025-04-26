@@ -1,13 +1,15 @@
 #ifndef STRUCTURES_H
 #define STRUCTURES_H
 
-typedef struct {
-    char rank; 
-    char suit;  
-} Card;
+typedef struct card{
+    char value;
+    char suit;
+} Card_t;
 
-typedef struct Node {
-    Card card;
-    int visible;
-    struct Node* next;   
-} Node;
+typedef struct node {
+    Card_t card;
+    int isHidden;
+    struct node* next;
+} node;
+
+#endif

@@ -3,16 +3,12 @@
 //
 #ifndef COMMANDS_H
 #define COMMANDS_H
+#include "structures.h"
+node* deck;
 void LD(char filename[]);
 void createCard(char value[3]);
 void createBoard(void);
 void SW();
 void SR(node** root);
-typedef struct node {  // struct til at lave linked list med kortene
-    char value[3];
-    struct node *next; // bevæger kun 1 pointer til at pege frem ikke nogen til at pege tilbage
-    int isHidden;
-}node;
-
-extern node deck;
+void saveCard(node** root,char name[255]);
 #endif //COMMANDS_H

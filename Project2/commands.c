@@ -2,27 +2,17 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-
+#include "structures.h"
 //-----
 
-typedef struct node {  // struct til at lave linked list med kortene
-    char value[3];
-    struct node *next; // bevæger kun 1 pointer til at pege frem ikke nogen til at pege tilbage
-    int isHidden; // om kortet er oppe eller nede
-}node;
-
-node* deck = NULL;  //global fil tror jeg
 
 //------------------
+node* deck = NULL; // decket kortene bliver lagt hægtet på.
 void createCard(node** root, char value[3]);
 void LD(char fileName[])
 {
     char temp[4];
     FILE *fp;
-
-
-
-
 fp = fopen(fileName, "r"); // åbner filen
 
     if (fp == NULL)
@@ -42,8 +32,8 @@ fp = fopen(fileName, "r"); // åbner filen
 void createCard(node** root, char value[4]) {
     node* new_node = malloc(sizeof(node));
     new_node->next = NULL;
-    strncpy(new_node->value, value, 2);
-    new_node->value[2] = '\0';
+    new_node->card.value = value[0];
+    new_node->card.suit = value[1];
     new_node->isHidden = 0;
 
     // Check if the list is empty (root is NULL)
@@ -57,23 +47,25 @@ void createCard(node** root, char value[4]) {
         curr->next = new_node;
     }
 }
+
 //----------------
 //--
 void createBoard(void) { // fungere kun til startup phase
     printf("\nc1\tc2\tc3\tc4\tc5\tc6\tc7\n\n");
-    int counter = 0; // hver 7 skal den lave ny linje
-    int fCounter = 1; // sætter f på de rigtige steder
-    int numberF=0;  // +1 hver gang f bliver sat så vi får f1,f2,f3,f4
+    int counter = 0;
+    int fCounter = 1;
+    int numberF=0;
     for (node* curr = deck; curr != NULL; curr = curr->next) {
         if (curr->isHidden == 1) {
-            printf("%s", curr->value); // hvis kortet vender op ad
+            printf("%c%c", curr->card.value,curr->card.suit);
         }else {
-            printf("[]"); // hvis kortet vender ned af
+            printf("[]");
         }
         printf("\t");
         counter++;
 
-        if (counter == 7) {  // ny linje hver 7 søjle.
+
+        if (counter == 7) {
             if (fCounter == 1|| fCounter == 3|| fCounter == 5|| fCounter == 7)
             {
                 numberF++;
@@ -99,15 +91,15 @@ void SW() { // viser alle kortene
     createBoard();
 }
 //---------------
-void saveCard(node** root,char name[255]) { 
+void saveCard(node** root,char name[255]) {
     if (name == NULL) {
-        name = "cards.txt"; // hvis filen ikke får et navn
+        name = "cards.txt";
     }
     FILE *fp = fopen(name, "w");
     node* curr = *root;
-    while (curr != NULL) { // decket burde allerede være checket igennem, så derfor ingen behøve for sikkerhed.
-        fprintf(fp, "%s\n", curr->value); //printer værdi i filen.
-        curr = curr->next; //næste værdi
+    while (curr != NULL ) {
+        fprintf(fp, "%c%c\n", curr->card.value,curr->card.suit);
+        curr = curr->next;
     }
     fclose(fp);
 }
