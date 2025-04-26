@@ -7,7 +7,7 @@
 
 
 int main(void) {
-    char message[100] = "message:\n";
+    char message[100] = "\n";
 
     char str[255];
     char str2[4];
@@ -23,7 +23,7 @@ int main(void) {
     printf("\t\t\t\t\t\t\t\t[]\tf4\n");
     printf("\t\t\t\t\t\t\t\t\n");
     printf("last command:%s\n",str2);
-    printf("%s", &message[0]);
+    printf("message: %s", &message[0]);
     printf("input >");
 
     while (1) {
@@ -33,38 +33,55 @@ int main(void) {
         //--
         if (str2[0]=='L' && str2[1]=='D') { // command til at load
             if (numOfCmd == 2) {
+                sprintf(&message,"File found!\n");
                 LD(str3);
                 createBoard();
                 printf("last command:%s\n",str2);
-                printf("%s", &message[0]);
+                printf("message: %s", &message[0]);
                 printf("input >");
             } else {
+                sprintf(&message,"File not found\n");
                 LD("unshuffled.txt");
                 createBoard();
                 printf("last command:%s\n",str2);
-                printf("%s", &message[0]);
+                printf("message: %s", &message[0]);
                 printf("input >");
             }
         }
         //--
         else if (str2[0]=='S'&&str2[1]=='W') {     // command til vise all kort
             SW();
+            sprintf(&message,"cards are flipped\n");
             printf("last command:%s\n",str2);
-            printf("%s", &message[0]);
+                printf("message: %s", &message[0]);
             printf("input >");
         }
         //--
         else if (str2[0]=='S'&&str2[1]=='R') {   // command til at shuffle deck
+            sprintf(&message,"deck shuffled\n");
             SR(&deck);
             createBoard();
             printf("last command:%s\n",str2);
-            printf("%s", &message[0]);
+                printf("message: %s", &message[0]);
             printf("input >");
         }
         //--
         else if (str2[0]=='Q'&&str2[1]=='Q') { // command til at lukke program
             printf("Quit the program");
             exit(0);
+        }
+        else if (str2[0]=='S'&&str2[1]=='D') {// command til at gemme deck}
+            if (numOfCmd == 2) {
+                sprintf(&message,"file created!\n");
+                saveCard(&deck,str3);
+            }else {
+                sprintf(&message,"No file name given, cards.txt file created\n");
+                saveCard(&deck,"cards.txt");
+            }
+            createBoard();
+            printf("last command:%s\n",str2);
+            printf("message: %s", &message[0]);
+            printf("input >");
         }
         //--
         else {   //hvis ikke nogen af de rigtige commands er brugt

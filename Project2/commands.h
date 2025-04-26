@@ -10,5 +10,5 @@ void createCard(char value[3]);
 void createBoard(void);
 void SW();
 void SR(node** root);
-
+void saveCard(node** root,char name[255]);
 #endif //COMMANDS_H
