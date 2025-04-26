@@ -2,12 +2,12 @@
 #define STRUCTURES_H
 
 typedef struct {
-    char rank; 
-    char suit;  
+    char value;
+    char suit;
 } Card;
 
 typedef struct Node {
     Card card;
-    int visible;
-    struct Node* next;   
-} Node;
+    int isHidden;
+    struct node* next;
+} node;
