@@ -79,7 +79,7 @@ void createBoard(void) { // fungere kun til startup phase
         }
 
     }
-
+printf("\n");
 }
 //--
 void SW() { // viser alle kortene
