@@ -9,10 +9,12 @@
 //------------------
 node* deck = NULL; // decket kortene bliver lagt hægtet på.
 void createCard(node** root, char value[3]);
+int CHECK(char fileName[]);
 void LD(char fileName[])
 {
     char temp[4];
     FILE *fp;
+
 fp = fopen(fileName, "r"); // åbner filen
 
     if (fp == NULL)

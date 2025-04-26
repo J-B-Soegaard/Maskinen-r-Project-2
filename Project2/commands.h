@@ -11,4 +11,5 @@ void createBoard(void);
 void SW();
 void SR(node** root);
 void saveCard(node** root,char name[255]);
+int CHECK(char fileName[]);
 #endif //COMMANDS_H
