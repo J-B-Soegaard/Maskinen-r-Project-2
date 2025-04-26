@@ -33,7 +33,7 @@ int main(void) {
     strcpy(lastCmd, "LD"); //
             //char filename[50];
             //scanf("%s", filename);
-LD("/Users/jacobsoegaard/CLionProjects/Test/test.txt");
+LD("testt.txt");
             createBoard();
             printf("last command:%s\n",lastCmd);
             printf("%s", &message[0]);
@@ -56,6 +56,7 @@ LD("/Users/jacobsoegaard/CLionProjects/Test/test.txt");
             exit(0);
         }
 //--
+
         }
     }
 
