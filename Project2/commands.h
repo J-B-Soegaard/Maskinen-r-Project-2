@@ -12,4 +12,6 @@ void SW();
 void SR(node** root);
 void saveCard(node** root,char name[255]);
 int CHECK(char fileName[]);
+void SI(node **root, int split);
+
 #endif //COMMANDS_H

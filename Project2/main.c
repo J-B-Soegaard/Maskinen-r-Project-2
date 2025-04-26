@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "commands.h"
+#include <time.h>
 
 #define node deck;
 
@@ -82,6 +83,23 @@ int main(void) {
             printf("last command:%s\n",str2);
             printf("message: %s", &message[0]);
             printf("input >");
+        } else if (str2[0]=='S'&&str2[1]=='I') {// splitte og samle igen
+            if (numOfCmd == 2) {
+                SI(&deck,atoi(str3));
+                sprintf(&message,"deck split\n");
+                createBoard();
+                printf("last command:%s\n",str2);
+                printf("message: %s", &message[0]);
+                printf("input >");
+            }else {
+                srand(time(NULL));
+                SI(&deck,rand()%51+1);
+                sprintf(&message,"no number given random number chosen\n");
+                createBoard();
+                printf("last command:%s\n",str2);
+                printf("message: %s", &message[0]);
+                printf("input >");
+            }
         }
         //--
         else {   //hvis ikke nogen af de rigtige commands er brugt

@@ -93,6 +93,43 @@ void SW() { // viser alle kortene
     createBoard();
 }
 //---------------
+//--
+void SI(node **root, int split) {
+    node *deck = *root;       // brug *root som deck
+    node *curr = deck;
+    node *deck2 = NULL;
+    int i = 0;
+
+    while (i < split - 1) {
+
+        curr = curr->next;
+        i++;
+    }
+
+    deck2 = curr->next; // her splitter vi
+    curr->next = NULL;
+
+    node *newDeck = NULL;
+    node **ptrDeck = &newDeck; //holder adressen til hvor næste kort skal ind
+
+    while (deck != NULL || deck2 != NULL) {
+        if (deck != NULL) { // tag et kort fra deck på putter det i nye deck
+            *ptrDeck = deck;
+            deck = deck->next;
+            ptrDeck = &((*ptrDeck)->next);
+        }
+        if (deck2 != NULL) {    // tag et kort fra deck2 på putter det i nye deck
+            *ptrDeck = deck2;
+            deck2 = deck2->next;
+            ptrDeck = &((*ptrDeck)->next);
+        }
+    }
+    *ptrDeck = NULL;
+
+    *root = newDeck; //  new deck bliver til deck
+}
+//--
+//---------------
 void saveCard(node** root,char name[255]) {
     if (name == NULL) {
         name = "cards.txt";
