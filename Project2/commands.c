@@ -38,7 +38,7 @@ void createCard(node** root, char value[4]) {
     new_node->card.suit = value[1];
     new_node->isHidden = 0;
 
-    // Check if the list is empty (root is NULL)
+    // check om listen er tom.
     if (*root == NULL) {
         *root = new_node;
     } else {
@@ -114,9 +114,9 @@ void SI(node **root, int split) {
 
     while (deck != NULL || deck2 != NULL) {
         if (deck != NULL) { // tag et kort fra deck på putter det i nye deck
-            *ptrDeck = deck;
+            *ptrDeck = deck;    //sætter nyt kort ind på newDeck
             deck = deck->next;
-            ptrDeck = &((*ptrDeck)->next);
+            ptrDeck = &(*ptrDeck)->next;
         }
         if (deck2 != NULL) {    // tag et kort fra deck2 på putter det i nye deck
             *ptrDeck = deck2;
@@ -274,3 +274,23 @@ void SR(node** root) {
   *root = deck_temp;
 
 }
+void P(node** root) {
+    node* C1= NULL; node* C2 = NULL; node* C3 = NULL; node* C4 = NULL; node* C5 = NULL; node* C6 = NULL; node* C7 = NULL; // all søjler
+    node** ptrC1 = &C1; node** ptrC2 = &C2;
+    node** ptrC3 = &C3; node** ptrC4 = &C4;
+    node** ptrC5 = &C5; node** ptrC6 = &C6;
+    node** ptrC7 = &C7; // double pointer til komme til næste element i alle søjlerne
+    int card_count = 0;
+    node *curr = *root;
+    node* prev = curr;
+    while (*root != NULL) {
+        if (card_count<1) {
+            ptrC1=curr;
+            curr=curr->next;
+            prev->next=NULL;
+            *ptrC1=&((*ptrC1)->next);
+        }
+
+        card_count++;
+    } // slut while loop
+} //work in progress
