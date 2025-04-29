@@ -276,48 +276,69 @@ void SR(node** root) {
 }
 void P(node** root) {
     node* C1= NULL; node* C2 = NULL; node* C3 = NULL; node* C4 = NULL; node* C5 = NULL; node* C6 = NULL; node* C7 = NULL; // all søjler
-
+ node** c1ptr= &C1;
+    node** c2ptr= &C2;
+    node** c3ptr= &C3;
+    node** c4ptr= &C4;
+    node** c5ptr= &C5;
+    node** c6ptr= &C6;
+    node** c7ptr= &C7;
     int card_count = 0;
     node *curr = *root;
     node* prev = curr;
+    int count=0;
     while (curr != NULL) {
         if (card_count<1) {
-            C1=curr;
+            *c1ptr = curr; // giver kortet til c1
+            curr=curr->next; // vider i listen
+            prev->next=NULL; // klipper listen
+            prev=curr;
+            c1ptr = &((*c1ptr)->next);
+        }
+        if (card_count<6) {
+            *c2ptr = curr;
             curr=curr->next;
             prev->next=NULL;
+            prev=curr;
+            c2ptr = &((*c2ptr)->next);
 
         }
-        if (card_count<=6) {
-            C2=curr;
-            prev = curr;
+        if (card_count<7) {
+           *c3ptr = curr;
             curr=curr->next;
-
+            prev->next=NULL;
+            prev=curr;
+            c3ptr = &((*c3ptr)->next);
         }
-        if (card_count<=7) {
-            C3=curr;
-            prev = curr;
+        if (card_count<8) {
+            *c4ptr = curr;
             curr=curr->next;
+            prev->next=NULL;
+            prev=curr;
+            c4ptr = &((*c4ptr)->next);
         }
-        if (card_count<=8) {
-            C4=curr;
-            prev = curr;
+        if (card_count<9) {
+           *c5ptr = curr;
             curr=curr->next;
+            prev->next=NULL;
+            prev=curr;
+            c5ptr = &((*c5ptr)->next);
         }
-        if (card_count<=9) {
-            C5=curr;
-            prev = curr;
+        if (card_count<10) {
+            *c6ptr = curr;
             curr=curr->next;
+            prev->next=NULL;
+            prev=curr;
+            c6ptr = &((*c6ptr)->next);
         }
-        if (card_count<=10) {
-            C6=curr;
-            prev = curr;
+        if (card_count<11) {
+           *c7ptr = curr;
             curr=curr->next;
-        }
-        if (card_count<=11) {
-            C7=curr;
-            prev = curr;
-            curr=curr->next;
+            prev->next=NULL;
+            prev=curr;
+            c7ptr = &((*c7ptr)->next);
         }
         card_count++;
     } // slut while loop
-} //work in progress
+   
+}
