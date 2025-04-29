@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "structures.h"
 
 // if u want to change max number of cards for each column change this value
 #define MAX_ROWS 20
