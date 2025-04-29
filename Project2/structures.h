@@ -12,4 +12,12 @@ typedef struct node {
     struct node* next;
 } node;
 
+typedef struct {
+    Node* columns[7];
+    Node* foundations[4];
+    char last_cmd[256];
+    char message[256];
+    int in_play_phase;
+} GameState;
+
 #endif
