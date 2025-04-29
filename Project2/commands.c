@@ -286,10 +286,11 @@ void P(node** root) {
     int card_count = 0;
     node *curr = *root;
     node* prev = curr;
-    int count=0;
+
     while (curr != NULL) {
         if (card_count<1) {
             *c1ptr = curr; // giver kortet til c1
+            curr->isHidden=1;
             curr=curr->next; // vider i listen
             prev->next=NULL; // klipper listen
             prev=curr;
@@ -297,6 +298,11 @@ void P(node** root) {
         }
         if (card_count<6) {
             *c2ptr = curr;
+            if (card_count<1) { // logik til at hvilket kort skal skjules
+                curr->isHidden=0; // skjuler
+            }else {
+                curr->isHidden=1; // viser
+            } //
             curr=curr->next;
             prev->next=NULL;
             prev=curr;
@@ -305,6 +311,11 @@ void P(node** root) {
         }
         if (card_count<7) {
            *c3ptr = curr;
+            if (card_count<2) { // logik til at hvilket kort skal skjules
+                curr->isHidden=0; // skjuler
+            }else {
+                curr->isHidden=1; // viser
+            } //
             curr=curr->next;
             prev->next=NULL;
             prev=curr;
@@ -312,6 +323,11 @@ void P(node** root) {
         }
         if (card_count<8) {
             *c4ptr = curr;
+            if (card_count<3) { // logik til at hvilket kort skal skjules
+                curr->isHidden=0; // skjuler
+            }else {
+                curr->isHidden=1; // viser
+            } //
             curr=curr->next;
             prev->next=NULL;
             prev=curr;
@@ -319,6 +335,11 @@ void P(node** root) {
         }
         if (card_count<9) {
            *c5ptr = curr;
+            if (card_count<4) { // logik til at hvilket kort skal skjules
+                curr->isHidden=0; // skjuler
+            }else {
+                curr->isHidden=1; // viser
+            } //
             curr=curr->next;
             prev->next=NULL;
             prev=curr;
@@ -326,6 +347,11 @@ void P(node** root) {
         }
         if (card_count<10) {
             *c6ptr = curr;
+            if (card_count<5) { // logik til at hvilket kort skal skjules
+                curr->isHidden=0; // skjuler
+            }else {
+                curr->isHidden=1; // viser
+            } //
             curr=curr->next;
             prev->next=NULL;
             prev=curr;
@@ -333,12 +359,20 @@ void P(node** root) {
         }
         if (card_count<11) {
            *c7ptr = curr;
+            if (card_count<6) { // logik til at hvilket kort skal skjules
+                curr->isHidden=0; // skjuler
+            }else {
+                curr->isHidden=1; // viser
+            } //
             curr=curr->next;
             prev->next=NULL;
             prev=curr;
             c7ptr = &((*c7ptr)->next);
         }
         card_count++;
+
     } // slut while loop
+  
+}
    
 }
