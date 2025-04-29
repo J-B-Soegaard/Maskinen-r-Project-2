@@ -1,7 +1,7 @@
 #ifndef GAMESTATE_H
 #define GAMESTATE_H
 
-#include "card.h"  
+#include "structures.h"  
 
 typedef struct GameState {
     CardNode *deck;           
