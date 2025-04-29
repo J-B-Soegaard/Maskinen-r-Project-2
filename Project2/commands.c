@@ -276,21 +276,48 @@ void SR(node** root) {
 }
 void P(node** root) {
     node* C1= NULL; node* C2 = NULL; node* C3 = NULL; node* C4 = NULL; node* C5 = NULL; node* C6 = NULL; node* C7 = NULL; // all søjler
-    node** ptrC1 = &C1; node** ptrC2 = &C2;
-    node** ptrC3 = &C3; node** ptrC4 = &C4;
-    node** ptrC5 = &C5; node** ptrC6 = &C6;
-    node** ptrC7 = &C7; // double pointer til komme til næste element i alle søjlerne
+
     int card_count = 0;
     node *curr = *root;
     node* prev = curr;
-    while (*root != NULL) {
+    while (curr != NULL) {
         if (card_count<1) {
-            ptrC1=curr;
+            C1=curr;
             curr=curr->next;
             prev->next=NULL;
-            *ptrC1=&((*ptrC1)->next);
-        }
 
+        }
+        if (card_count<=6) {
+            C2=curr;
+            prev = curr;
+            curr=curr->next;
+
+        }
+        if (card_count<=7) {
+            C3=curr;
+            prev = curr;
+            curr=curr->next;
+        }
+        if (card_count<=8) {
+            C4=curr;
+            prev = curr;
+            curr=curr->next;
+        }
+        if (card_count<=9) {
+            C5=curr;
+            prev = curr;
+            curr=curr->next;
+        }
+        if (card_count<=10) {
+            C6=curr;
+            prev = curr;
+            curr=curr->next;
+        }
+        if (card_count<=11) {
+            C7=curr;
+            prev = curr;
+            curr=curr->next;
+        }
         card_count++;
     } // slut while loop
 } //work in progress
