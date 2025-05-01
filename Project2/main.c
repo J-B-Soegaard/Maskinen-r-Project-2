@@ -50,9 +50,15 @@ int main(void) {
                     sprintf(&message,"ERROR: File contains invalid cards\n"); //fil har kort der ikke har rigtig format
                 } else if (CHECK(str3) == 4) {
                     sprintf(&message,"ERROR: Unable to open check deck\n");//Kan ikke åbne unshuffeld (burde ikke ske)
+                    printf("last command:%s\n",str2);
+                    printf("message: %s", &message[0]);
+                    printf("input >");
                     exit(0);
                 } else if (CHECK(str3) == 5) {
                     sprintf(&message,"ERROR: Check deck doesn't have enough cards\n"); //Burde ikke ske
+                    printf("last command:%s\n",str2);
+                    printf("message: %s", &message[0]);
+                    printf("input >");
                     exit(0);
                 } else if (CHECK(str3) == 6) {
                     sprintf(&message,"ERROR: Unable to open the file\n");   //Kan ikke åbne givet fil
