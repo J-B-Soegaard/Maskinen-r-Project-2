@@ -303,6 +303,25 @@ void P(node** root) {
     node *curr = *root;
     node* prev = curr;
 
+    if(Q){				//Skal være if ("spilleren har skrevet Q så køre vi dette if statement")
+      freeDeck(&C1);	//Frigør plads
+      freeDeck(&C2);
+      freeDeck(&C3);
+      freeDeck(&C4);
+      freeDeck(&C5);
+      freeDeck(&C6);
+      freeDeck(&C7);
+      //freeDeck(&F1);
+      //freeDeck(&F2);
+      //freeDeck(&F3);
+      //freeDeck(&F4);
+
+
+      // Når vi kommer tilbage i main kan vi printe:
+      // sprintf(&message,"Quit Game. Deck has been saved. Use LD saved_deck\n");
+      // Noget i den stil yk
+    }
+
     while (curr != NULL) {
         if (card_count<1) {
             *c1ptr = curr; // giver kortet til c1
