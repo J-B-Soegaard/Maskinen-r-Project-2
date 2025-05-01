@@ -276,6 +276,20 @@ void SR(node** root) {
   *root = deck_temp;
 
 }
+//
+void freeDeck(node **root) {
+    node* current = *root; // til at holde værdien
+    node* tmp; // til at frigøre
+
+    while (current != NULL) {
+        tmp = current;
+        current = current->next;
+        free(tmp);
+    }
+
+    *root = NULL;
+}
+//
 void P(node** root) {
     node* C1= NULL; node* C2 = NULL; node* C3 = NULL; node* C4 = NULL; node* C5 = NULL; node* C6 = NULL; node* C7 = NULL; // all søjler
  node** c1ptr= &C1;
@@ -374,7 +388,7 @@ void P(node** root) {
         card_count++;
 
     } // slut while loop
-  
+ char list[13]={'A','2','3','4','5','6','7','8','9','T','J','Q','K'}; //liste til at se hvad er størst.
 }
    
-}
+
