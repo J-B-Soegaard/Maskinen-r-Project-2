@@ -42,7 +42,23 @@ int main(void) {
                 printf("message: %s", &message[0]);
                 printf("input >");
             } else {
-                sprintf(&message,"File not found\n");
+                if (CHECK(str3) == 1) {
+                sprintf(&message,"ERROR: File contains duplicate cards\n"); //File har duplicated cards
+                } else if (CHECK(str3) == 2) {
+                    sprintf(&message,"ERROR: File contains more then 52 cards\n"); //Mere end 52 kort
+                } else if (CHECK(str3) == 3) {
+                    sprintf(&message,"ERROR: File contains invalid cards\n"); //fil har kort der ikke har rigtig format
+                } else if (CHECK(str3) == 4) {
+                    sprintf(&message,"ERROR: Unable to open check deck\n");//Kan ikke åbne unshuffeld (burde ikke ske)
+                    exit(0);
+                } else if (CHECK(str3) == 5) {
+                    sprintf(&message,"ERROR: Check deck doesn't have enough cards\n"); //Burde ikke ske
+                    exit(0);
+                } else if (CHECK(str3) == 6) {
+                    sprintf(&message,"ERROR: Unable to open the file\n");   //Kan ikke åbne givet fil
+                } else if (CHECK(str3) == 7) {
+                    sprintf(&message,"ERROR: File contains less then 52 cards\n"); // mindre end 52 kort
+                }
                 LD("unshuffled.txt");
                 createBoard();
                 printf("last command:%s\n",str2);
