@@ -12,6 +12,7 @@
 node* deck = NULL; // decket kortene bliver lagt hægtet på.
 void createCard(node** root, char value[3]);
 int CHECK(char fileName[]);
+int checkWin(node* F1, node* F2, node* F3, node* F4);
 void LD(char fileName[])
 {
     char temp[4];
@@ -507,6 +508,32 @@ void P(node** root) {
 
     } // slut while loop
  char list[13]={'A','2','3','4','5','6','7','8','9','T','J','Q','K'}; //liste til at se hvad er størst.
+
+ if (checkWin(F1,F2,F3,F4)){
+   printf("message: Congratulations, you won!\n");
+   printf("message: Type \"N\" for a New Game \n >");
+   printf("message: Type \"Q\" to Quit the Game \n >");
+   printf("input >");
+
+   // Vi breaker så ud af Void P tilbage i main hvor vi så laver et statement der venter på svar fra brugeren
+   // der kan vi lave if statement der hvis vi for N går tilbage til startup phase ellers Q for at quit helt
+   // Jeg synes det er bedst sådan for at give spilleren et præcis overblik over hvad der sker når man vinder  da dette
+   // ikke er skrevet præcist i opgaven hvad der skal ske.
+ }
+
 }
 
+int LastIsK(node* root) {
+    if (root == NULL) return 0; // Hvis bunken er tom behøver vi ikke tjekke og retunere 0 (false)
+
+    while (root->next != NULL) {	// Find det sidste kort
+        root = root->next;
+    }
+
+    return (root->card.value == 'K');	// Hvis det sidste kort er en konge retunere vi 1 (true)
+}
+
+int checkWin(node* F1, node* F2, node* F3, node* F4) {
+    return LastIsK(F1) && LastIsK(F2) && LastIsK(F3) && LastIsK(F4); // Retunere 1 hvis alle F's sidste kort er K ellers 0
+}
 

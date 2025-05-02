@@ -13,5 +13,7 @@ void SR(node** root);
 void saveCard(node** root,char name[255]);
 int CHECK(char fileName[]);
 void SI(node **root, int split);
+int LastIsK(node* root);
+int checkWin(node* F1, node* F2, node* F3, node* F4);
 
 #endif //COMMANDS_H
