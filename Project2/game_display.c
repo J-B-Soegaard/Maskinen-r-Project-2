@@ -3,7 +3,6 @@
 #include <string.h>
 #include "structures.h"
 #include "gamedisplay.h"
-#include "game_state.h"
 
 
 // if u want to change max number of cards for each column change this value
