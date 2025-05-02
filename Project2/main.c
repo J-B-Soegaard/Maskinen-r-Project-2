@@ -3,13 +3,11 @@
 #include <string.h>
 #include "commands.h"
 #include <time.h>
-#include "game_state.h"
+#include "structures.h"
 
 
 #define node deck;
 
-// initializes the game state to 0, so null
-// GameState game_state = {0};
 
 int main(void) {
     char message[100] = "\n";
