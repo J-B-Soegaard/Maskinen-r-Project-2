@@ -8,6 +8,8 @@
 
 #define node deck;
 
+// initializes the game state to 0, so null
+// GameState game_state = {0};
 
 int main(void) {
     char message[100] = "\n";
