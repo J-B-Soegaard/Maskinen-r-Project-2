@@ -3,7 +3,7 @@
 #include <string.h>
 #include <time.h>
 #include "structures.h"
-#include "game_state.h"
+
 
 //-----
 
