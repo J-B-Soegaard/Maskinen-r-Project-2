@@ -3,6 +3,7 @@
 #include <string.h>
 #include "commands.h"
 #include <time.h>
+#include "game_state.h"
 
 
 #define node deck;
