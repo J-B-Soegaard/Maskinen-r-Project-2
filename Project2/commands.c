@@ -539,16 +539,16 @@ void P(node** root) {
       printf("Ugyldigt format! Brug '->'\n");
     } else {
 
-      int FromLeng = arrow - input; 		// Længten bag ved -> aka From delen (Skal meget gerne være 5)
-      strncpy(FromCo, input, FromLeng);
-      FromCo[FromLeng] = '\0';
-      strcpy(ToCo, arrow + 2);
+      int FromLeng = arrow - input; 		// Længten bag ved -> aka From delen (Skal meget gerne være 5 eller 2)
+      strncpy(FromCo, input, FromLeng);		// Kopierer de første FromLeng tegn fra input til FromCo.
+      FromCo[FromLeng] = '\0';				// Afslutter med \0
+      strcpy(ToCo, arrow + 2);				// Kopier det der er efter -> (skipper 2 tegn)
 
       char* colon = strchr(FromCo, ':'); // Tjek hvis der er ":" i input
 
       if (colon != NULL) {
         *colon = '\0';             // Split column og kort ad
-        strcpy(card, colon + 1);
+        strcpy(card, colon + 1);   // Læser kort
       }
 
       // Find FROM pointer
