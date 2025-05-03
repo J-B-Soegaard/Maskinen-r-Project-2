@@ -125,10 +125,16 @@ int main(void) {
                 printf("input >");
             }
         } else if (str2[0]=='P') {
+            saveCard(&deck,"currentdeck.txt");
         P(&deck);
-        }
-        //--
-        else {   //hvis ikke nogen af de rigtige commands er brugt
+        LD("currentdeck.txt");
+            createBoard();
+            sprintf(&message,"game Quit\n");
+            printf("last command: Q\n");
+            printf("message: %s", &message[0]);
+            printf("input >");
+
+        }   else {   //hvis ikke nogen af de rigtige commands er brugt
             createBoard();
             sprintf(&message,"command not found\n");
             printf("last command:%s\n",str2);

@@ -47,6 +47,6 @@ AS
 8S
 9S
 TS
-jS
+JS
 QS
 KS

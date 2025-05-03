@@ -545,7 +545,7 @@ void P(node** root) {
 
     } // slut while loop
   //liste til at se hvad er størst.
-
+deck=NULL;
  while(1){
      node* Carr[7]={C1,C2,C3,C4,C5,C6,C7}; //gameboard
      node* Farr[4]={F1,F2,F3,F4}; // til gameboard
