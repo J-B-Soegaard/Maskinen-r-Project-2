@@ -125,7 +125,7 @@ int main(void) {
                 printf("input >");
             }
         } else if (str2[0]=='P') {
-
+        P(&deck);
         }
         //--
         else {   //hvis ikke nogen af de rigtige commands er brugt

@@ -15,5 +15,5 @@ int CHECK(char fileName[]);
 void SI(node **root, int split);
 int LastIsK(node* root);
 int checkWin(node* F1, node* F2, node* F3, node* F4);
-
+void P(node** root);
 #endif //COMMANDS_H
