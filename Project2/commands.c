@@ -622,7 +622,7 @@ void P(node** root) {
       else if (strcmp(FromCo, "F4") == 0) from = &F4;
       else {
         printf("Message: Ugyldig From \"%s\"\n", FromCo);	// Hvis input ikke er en gyldig C eller F print
-          continue;
+          return;
       }
 
 
