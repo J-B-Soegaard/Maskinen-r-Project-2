@@ -2,9 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include "structures.h"
-#include "gamedisplay.h"
 
 
+/*
 // if u want to change max number of cards for each column change this value
 #define MAX_ROWS 20
 
@@ -62,3 +62,4 @@ void display_game(GameState* state) {
     printf("Message: %s\n", state->message);
     printf("INPUT > ");
 }
+*/

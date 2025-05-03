@@ -402,6 +402,20 @@ void P(node** root) {
     node *curr = *root;
     node* prev = curr;
 
+    //
+    node* F1=NULL;
+    node* F2=NULL;
+    node* F3=NULL;
+    node* F4=NULL;
+    createCard(&F1,"[]");
+    createCard(&F2,"[]");
+    createCard(&F3,"[]");
+    createCard(&F4,"[]");
+    F1->isHidden = 2; // C
+    F2->isHidden = 3; // D
+    F3->isHidden = 4; // H
+    F4->isHidden = 5; // S
+    //
     while (curr != NULL) {
         if (card_count<1) {
             *c1ptr = curr; // giver kortet til c1

@@ -124,6 +124,8 @@ int main(void) {
                 printf("message: %s", &message[0]);
                 printf("input >");
             }
+        } else if (str2[0]=='P') {
+
         }
         //--
         else {   //hvis ikke nogen af de rigtige commands er brugt
