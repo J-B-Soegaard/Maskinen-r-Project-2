@@ -420,7 +420,7 @@ void gameboard(node* collum[7],node* fonditons[4]) {
             }
         }
         if (counter==1||counter==3||counter==5||counter==7) {
-            printf("%c%c",fondArr[j]->card.value,fondArr[j]->card.suit);
+            printf("\t\t%c%c\tF%d",fondArr[j]->card.value,fondArr[j]->card.suit,j);
             j++;
         }
         counter++;
