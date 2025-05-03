@@ -4,7 +4,7 @@
 #ifndef COMMANDS_H
 #define COMMANDS_H
 #include "structures.h"
-node* deck;
+extern node* deck;
 void LD(char filename[]);
 void createCard(char value[3]);
 void createBoard(void);

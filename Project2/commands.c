@@ -521,7 +521,7 @@ void P(node** root) {
    // ikke er skrevet præcist i opgaven hvad der skal ske.
      }
 
-   printf("Message: Indtast dit Move (eller Q for at Quit)");
+   printf("Message: Indtast dit Move (eller Q for at Quit) \n");
    printf("Input >");
    fgets(input, 100, stdin);
 
@@ -579,7 +579,8 @@ void P(node** root) {
       else if (strcmp(FromCo, "F3") == 0) from = &F3;
       else if (strcmp(FromCo, "F4") == 0) from = &F4;
       else {
-        printf("Ugyldig From: %s\n", FromCo);	// Hvis input ikke er en gyldig C eller F print
+        printf("Message: Ugyldig From \"%s\"\n", FromCo);	// Hvis input ikke er en gyldig C eller F print
+          continue;
       }
 
 
@@ -597,16 +598,15 @@ void P(node** root) {
       else if (strcmp(ToCo, "F3") == 0) to = &F3;
       else if (strcmp(ToCo, "F4") == 0) to = &F4;
       else {
-        printf("Ugyldig TO: %s\n", ToCo);	// Hvis input ikke er en gyldig C eller F print
+        printf("Message: Ugyldig TO: \"%s\"\n", ToCo);	// Hvis input ikke er en gyldig C eller F print
+          continue;
       }
 
-      move(from, card, to);			// Rykker de ønskede kort
+        if (to != NULL && from != NULL)
+        {
+            move(from, card, to);			// Rykker de ønskede kort
+        }
     } //If-else statement slut
-
-
-
-
-
  } //While loop slut
 
 }

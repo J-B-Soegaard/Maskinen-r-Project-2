@@ -6,7 +6,7 @@
 #include "structures.h"
 
 
-#define node deck;
+
 
 
 int main(void) {
