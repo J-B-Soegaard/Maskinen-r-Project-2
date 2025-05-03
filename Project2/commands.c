@@ -388,6 +388,46 @@ void move(node **from, char card[4], node **to) {
         }
     }
 }
+// gameBoard
+void gameboard(node* collum[7],node* fonditons[4]) {
+    node* c1=collum[0];
+    node* c2=collum[1];
+    node* c3=collum[2];
+    node* c4=collum[3];
+    node* c5=collum[4];
+    node* c6=collum[5];
+    node* c7=collum[6];
+    node* række[]={c1,c2,c3,c4,c5,c6,c7};
+    node* fond1=fonditons[0];
+    node* fond2=fonditons[1];
+    node* fond3=fonditons[2];
+    node* fond4=fonditons[3];
+    node* fondArr[4]={fond1,fond2,fond3,fond4};
+    int j=0;
+    printf("\nc1\tc2\tc3\tc4\tc5\tc6\tc7\n\n");
+    int counter = 1;
+    while (række[0]!=NULL||række[1]!=NULL||række[2]!=NULL||række[3]!=NULL||række[4]!=NULL||række[5]!=NULL||række[6]!=NULL||counter<=7) {
+        for (int i=0;i<7;i++) {
+            if (række[i]!=NULL) {
+                if (række[i]->isHidden==1) {
+                    printf("%c%c\t",række[i]->card.value,række[i]->card.suit);
+                }else {
+                    printf("[]\t");
+                }
+                række[i]=række[i]->next;
+            } else {
+                printf("\t");
+            }
+        }
+        if (counter==1||counter==3||counter==5||counter==7) {
+            printf("%c%c",fondArr[j]->card.value,fondArr[j]->card.suit);
+            j++;
+        }
+        counter++;
+        printf("\n");
+    }
+}
+// slut gameboard
 // playphase
 void P(node** root) {
     node* C1= NULL; node* C2 = NULL; node* C3 = NULL; node* C4 = NULL; node* C5 = NULL; node* C6 = NULL; node* C7 = NULL; // all søjler
@@ -501,9 +541,11 @@ void P(node** root) {
         card_count++;
 
     } // slut while loop
- char list[13]={'A','2','3','4','5','6','7','8','9','T','J','Q','K'}; //liste til at se hvad er størst.
-
+  //liste til at se hvad er størst.
+    node* Carr[7]={C1,C2,C3,C4,C5,C6,C7}; //gameboard
+    node* Farr[4]={F1,F2,F3,F4}; // til gameboard
  while(1){
+     gameboard(Carr,Farr);
    char input[100];
    char FromCo[10];  // Column vi rykker fra
    char ToCo[10];    // Column vi rykker hen til
