@@ -401,26 +401,7 @@ void P(node** root) {
     int card_count = 0;
     node *curr = *root;
     node* prev = curr;
-/*
-    if(Q){				//Skal være if ("spilleren har skrevet Q så køre vi dette if statement")
-      freeDeck(&C1);	//Frigør plads
-      freeDeck(&C2);
-      freeDeck(&C3);
-      freeDeck(&C4);
-      freeDeck(&C5);
-      freeDeck(&C6);
-      freeDeck(&C7);
-      //freeDeck(&F1);
-      //freeDeck(&F2);
-      //freeDeck(&F3);
-      //freeDeck(&F4);
 
-
-      // Når vi kommer tilbage i main kan vi printe:
-      // sprintf(&message,"Quit Game. Deck has been saved. Use LD saved_deck\n");
-      // Noget i den stil yk
-    }
-    */
     while (curr != NULL) {
         if (card_count<1) {
             *c1ptr = curr; // giver kortet til c1
@@ -508,17 +489,111 @@ void P(node** root) {
     } // slut while loop
  char list[13]={'A','2','3','4','5','6','7','8','9','T','J','Q','K'}; //liste til at se hvad er størst.
 
- if (checkWin(F1,F2,F3,F4)){
-   printf("message: Congratulations, you won!\n");
-   printf("message: Type \"N\" for a New Game \n >");
-   printf("message: Type \"Q\" to Quit the Game \n >");
-   printf("input >");
+ while(1){
+   char input[100];
+   char FromCo[10];  // Column vi rykker fra
+   char ToCo[10];    // Column vi rykker hen til
+   char card[4] = "";  // Hvis der er angivet kort er det kortet vi ville rykke
 
+   if (checkWin(F1,F2,F3,F4)){
+       printf("message: Congratulations, you won!\n");
+       printf("message: Type \"N\" for a New Game \n >");
+       printf("message: Type \"Q\" to Quit the Game \n >");
+       printf("input >");
+       break;
    // Vi breaker så ud af Void P tilbage i main hvor vi så laver et statement der venter på svar fra brugeren
    // der kan vi lave if statement der hvis vi for N går tilbage til startup phase ellers Q for at quit helt
    // Jeg synes det er bedst sådan for at give spilleren et præcis overblik over hvad der sker når man vinder  da dette
    // ikke er skrevet præcist i opgaven hvad der skal ske.
- }
+     }
+
+   printf("Message: Indtast dit Move (eller Q for at Quit)");
+   printf("Input >");
+   fgets(input, 100, stdin);
+
+   //Fjern newLine
+   input[strcspn(input, "\n")] = 0;
+
+   //Tjek for Q (quit)
+    if(strcmp(input, "Q") == 0 || strcmp(input, "q") == 0){		//hvis Quit så køre vi quit
+      freeDeck(&C1);	//Frigør plads
+      freeDeck(&C2);
+      freeDeck(&C3);
+      freeDeck(&C4);
+      freeDeck(&C5);
+      freeDeck(&C6);
+      freeDeck(&C7);
+      freeDeck(&F1);
+      freeDeck(&F2);
+      freeDeck(&F3);
+      freeDeck(&F4);
+      // Når vi kommer tilbage i main kan vi printe:
+      // sprintf(&message,"Quit Game. Deck has been saved. Use LD saved_deck\n");
+      // Noget i den stil yk
+      break;
+    }
+
+    // Split op i 'fra' og 'til' ved at splitte ved "->"
+    char* arrow = strstr(input, "->");
+    if (arrow == NULL) {						// Hvis ingen arrow are det forkert format og vi køre ikke koden
+      printf("Ugyldigt format! Brug '->'\n");
+    } else {
+
+      int FromLeng = arrow - input; 		// Længten bag ved -> aka From delen (Skal meget gerne være 5)
+      strncpy(FromCo, input, FromLeng);
+      FromCo[FromLeng] = '\0';
+      strcpy(ToCo, arrow + 2);
+
+      char* colon = strchr(FromCo, ':'); // Tjek hvis der er ":" i input
+
+      if (colon != NULL) {
+        *colon = '\0';             // Split column og kort ad
+        strcpy(card, colon + 1);
+      }
+
+      // Find FROM pointer
+      node** from = NULL;
+      if (strcmp(FromCo, "C1") == 0) from = &C1;
+      else if (strcmp(FromCo, "C2") == 0) from = &C2;
+      else if (strcmp(FromCo, "C3") == 0) from = &C3;
+      else if (strcmp(FromCo, "C4") == 0) from = &C4;
+      else if (strcmp(FromCo, "C5") == 0) from = &C5;
+      else if (strcmp(FromCo, "C6") == 0) from = &C6;
+      else if (strcmp(FromCo, "C7") == 0) from = &C7;
+      else if (strcmp(FromCo, "F1") == 0) from = &F1;
+      else if (strcmp(FromCo, "F2") == 0) from = &F2;
+      else if (strcmp(FromCo, "F3") == 0) from = &F3;
+      else if (strcmp(FromCo, "F4") == 0) from = &F4;
+      else {
+        printf("Ugyldig From: %s\n", FromCo);	// Hvis input ikke er en gyldig C eller F print
+      }
+
+
+      // Find TO pointer
+      node** to = NULL;
+      if (strcmp(ToCo, "C1") == 0) to = &C1;
+      else if (strcmp(ToCo, "C2") == 0) to = &C2;
+      else if (strcmp(ToCo, "C3") == 0) to = &C3;
+      else if (strcmp(ToCo, "C4") == 0) to = &C4;
+      else if (strcmp(ToCo, "C5") == 0) to = &C5;
+      else if (strcmp(ToCo, "C6") == 0) to = &C6;
+      else if (strcmp(ToCo, "C7") == 0) to = &C7;
+      else if (strcmp(ToCo, "F1") == 0) to = &F1;
+      else if (strcmp(ToCo, "F2") == 0) to = &F2;
+      else if (strcmp(ToCo, "F3") == 0) to = &F3;
+      else if (strcmp(ToCo, "F4") == 0) to = &F4;
+      else {
+        printf("Ugyldig TO: %s\n", ToCo);	// Hvis input ikke er en gyldig C eller F print
+      }
+
+      move(from, card, to);			// Rykker de ønskede kort
+    } //If-else statement slut
+
+
+
+
+
+ } //While loop slut
 
 }
 
