@@ -420,7 +420,10 @@ void gameboard(node* collum[7],node* fonditons[4]) {
             }
         }
         if (counter==1||counter==3||counter==5||counter==7) {
-            printf("\t\t%c%c\tF%d",fondArr[j]->card.value,fondArr[j]->card.suit,j);
+            while (fondArr[j]->next!=NULL) {
+                fondArr[j]=fondArr[j]->next;
+            }
+            printf("\t\t%c%c\tF%d",fondArr[j]->card.value,fondArr[j]->card.suit,j+1);
             j++;
         }
         counter++;
@@ -542,15 +545,15 @@ void P(node** root) {
 
     } // slut while loop
   //liste til at se hvad er størst.
-    node* Carr[7]={C1,C2,C3,C4,C5,C6,C7}; //gameboard
-    node* Farr[4]={F1,F2,F3,F4}; // til gameboard
+
  while(1){
-     gameboard(Carr,Farr);
+     node* Carr[7]={C1,C2,C3,C4,C5,C6,C7}; //gameboard
+     node* Farr[4]={F1,F2,F3,F4}; // til gameboard
    char input[100];
    char FromCo[10];  // Column vi rykker fra
    char ToCo[10];    // Column vi rykker hen til
    char card[4] = "";  // Hvis der er angivet kort er det kortet vi ville rykke
-
+     gameboard(Carr,Farr);
    if (checkWin(F1,F2,F3,F4)){
        printf("message: Congratulations, you won!\n");
        printf("message: Type \"N\" for a New Game \n >");
