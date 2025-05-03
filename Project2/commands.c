@@ -291,103 +291,102 @@ void freeDeck(node **root) {
     *root = NULL;
 }
 //move funktion
-void move(node **from,char card[4],node **to) {
-    node* list1=*from;
-    node* list2=*to;
-    node* temp = list1;
-    const char listOfValues[13]={'A','2','3','4','5','6','7','8','9','T','J','Q','K'};
+void move(node **from, char card[4], node **to) {
+    node* list1 = *from;    //søjle det kommer fra
+    node* list2 = *to;      // søjle den skal hen til.
+    node* temp = list1;     //holder værdi den element før det element vi vil har fat i første list
+    const char listOfValues[13] = {'A','2','3','4','5','6','7','8','9','T','J','Q','K'};
     int i = 0;
 
-    while (card[0]!=listOfValues[i]&&i!=12) {
-        i++;
+    while (card[0] != listOfValues[i] && i != 12) {
+        i++; //loop til at finde det korts værdi
     }
 
-    //-- finder tallet plads i array
-
-    // hvis det er en F
-    //-- finder kortet i linked list
-    while (list1!=NULL&&list1->card.value!=card[0]&&list1->card.suit!=card[1]) {
-        temp=list1;
-        list1 = list1->next; //finder frem til det rigtige element i linked list
+    while (list1 != NULL && (list1->card.value != card[0] || list1->card.suit != card[1])) {
+        temp = list1;
+        list1 = list1->next; //loop til at finde kortet i listen
     }
-    if (list1==NULL) { // hvis kortet ikke kan findes
+    if (list1 == NULL) {
+        return; //hvis kortet ikke er der.
+    }
+
+    if (*to == NULL && list1->card.value == 'K' && list1->next == NULL) { // hvis det er er en konge
+        *to = list1;    //konge kan kun rykke hen til en tom søjle
+        if (temp == list1) {
+            *from = NULL; //hvis rykker fra en tom søjle til en anden
+        } else {
+            temp->next = NULL; //hvis from søjle ikke er tom
+        }
         return;
     }
-    if (*to==NULL&& list1->card.value=='K') {
-        to=list1;
-        temp=NULL;
-        return;
-    }
-    if (list2->card.value == '['&&list2->card.suit == ']'&&list1->next==NULL) {
-        while (list2->next!=NULL) {
 
-            list2 = list2->next; // kommer til sidste element i linkedlist2
+
+    if (list2->card.value == '[' && list2->card.suit == ']' && list1->next == NULL) { //hvis det er en funndation
+        while (list2->next != NULL) {
+            list2 = list2->next;
         }
-        if (list2->isHidden==2&&list1->card.suit=='C') {
-            if (list1->card.value=='A') {
-                list2->next=list1;
-                temp->next=NULL;
+        if (list2->isHidden == 2 && list1->card.suit == 'C') { //hvis F1 bruger isHidden til at se forskel
+            if (list1->card.value == 'A' || list2->card.value == listOfValues[i - 1]) {
+                list2->next = list1;
+                if (temp == list1) {
+                    *from = NULL;
+                } else {
+                    temp->next = NULL;
+                }
             }
-        if (list2->card.value==listOfValues[i-1]) {
-            list2->next=list1;
-            temp->next=NULL;
+        } else if (list2->isHidden == 3 && list1->card.suit == 'D') {// hvis F2
+            if (list1->card.value == 'A' || list2->card.value == listOfValues[i - 1]) {
+                list2->next = list1;
+                if (temp == list1) {
+                    *from = NULL;
+                } else {
+                    temp->next = NULL;
+                }
+            }
+        } else if (list2->isHidden == 4 && list1->card.suit == 'H') { //hvis F3
+            if (list1->card.value == 'A' || list2->card.value == listOfValues[i - 1]) {
+                list2->next = list1;
+                if (temp == list1) {
+                    *from = NULL;
+                } else {
+                    temp->next = NULL;
+                }
+            }
+        } else if (list2->isHidden == 5 && list1->card.suit == 'S') { //hvis F4
+            if (list1->card.value == 'A' || list2->card.value == listOfValues[i - 1]) {
+                list2->next = list1;
+                if (temp == list1) {
+                    *from = NULL;
+                } else {
+                    temp->next = NULL;
+                }
+            }
         }
-        } else if (list2->isHidden==3&&list1->card.suit=='D') {
-            if (list1->card.value=='A') {
-                list2->next=list1;
-                temp->next=NULL;
-            }
-            if (list2->card.value==listOfValues[i-1]) {
-                list2->next=list1;
-                temp->next=NULL;
-            }
+    }
 
-        }   else if (list2->isHidden==4&&list1->card.suit=='H') {
-            if (list1->card.value=='A') {
-                list2->next=list1;
-                temp->next=NULL;
-            }
-            if (list2->card.value==listOfValues[i-1]) {
-                list2->next=list1;
-                temp->next=NULL;
-            }
+    while (list2->next != NULL) {
+        list2 = list2->next; //kommer til sidste element i to listen
+    }
 
-        }   else if (list2->isHidden==5&&list1->card.suit=='S') {
-            if (list1->card.value=='A') {
-                list2->next=list1;
-                temp->next=NULL;
-            }
-            if (list2->card.value==listOfValues[i-1]) {
-                list2->next=list1;
-                temp->next=NULL;
-            }
 
+    if (list1->card.suit != list2->card.suit && list2->card.value == listOfValues[i + 1]) { //checker om det er et lovligt move
+        list2->next = list1;
+        if (temp == list1) {
+            temp = NULL;
+        } else {
+            temp->next = NULL;
         }
-
-    }
-    while (list2->next!=NULL) {
-
-        list2 = list2->next; // kommer til sidste element i linkedlist2
-    }
-    //
-
-
-    //
-    if (list1->card.suit != list2->card.suit && list2->card.value == listOfValues[i + 1]) {
-        //hvis de ikke er ens, og til søjle er sidste kort er en værdi højere.
-          list2->next=list1; //putter kortet på næste liste
-          temp->next=NULL; // splitter i from listen
     }
 
-   //--
-list1=*from;
-    while (list1->next!=NULL) {
-        list1=list1->next;
+    if (*from != NULL) { 
+        list1 = *from;
+        while (list1->next != NULL) {
+            list1 = list1->next;
+        }
+        if (list1->isHidden == 0) { // checker om det kommer et ikke vendt kort på toppen som skal vendes.
+            list1->isHidden = 1;
+        }
     }
-    if (list1->isHidden==0) {
-        list1->isHidden=1;
-    }
-
 }
 // playphase
 void P(node** root) {
