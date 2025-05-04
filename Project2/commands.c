@@ -595,7 +595,7 @@ deck=NULL;
     // Split op i 'fra' og 'til' ved at splitte ved "->"
     char* arrow = strstr(input, "->");
     if (arrow == NULL) {						// Hvis ingen arrow are det forkert format og vi køre ikke koden
-      printf("Ugyldigt format! Brug '->'\n");
+      printf("Message: Ugyldigt format! Brug '->'\n");
     } else {
 
       int FromLeng = arrow - input; 		// Længten bag ved -> aka From delen (Skal meget gerne være 5 eller 2)
