@@ -8,7 +8,7 @@ AC
 8C
 9C
 TC
-jC
+JC
 QC
 KC
 AD
@@ -21,7 +21,7 @@ AD
 8D
 9D
 TD
-jD
+JD
 QD
 KD
 AH
@@ -34,7 +34,7 @@ AH
 8H
 9H
 TH
-jH
+JH
 QH
 KH
 AS

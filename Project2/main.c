@@ -39,7 +39,7 @@ int main(void) {
                 sprintf(&message,"File found!\n");
                 LD(str3);
                 createBoard();
-                printf("last command:%s\n",str2);
+                printf("last command:%s %s\n",str2,str3);
                 printf("message: %s", &message[0]);
                 printf("input >");
             } else {
@@ -97,6 +97,7 @@ int main(void) {
         }
         else if (str2[0]=='S'&&str2[1]=='D') {// command til at gemme deck}
             if (numOfCmd == 2) {
+                printf("last command:%s %s\n",str2,str3);
                 sprintf(&message,"file created!\n");
                 saveCard(&deck,str3);
             }else {
@@ -112,7 +113,7 @@ int main(void) {
                 SI(&deck,atoi(str3));
                 sprintf(&message,"deck split\n");
                 createBoard();
-                printf("last command:%s\n",str2);
+                printf("last command:%s %s\n",str2,str3);
                 printf("message: %s", &message[0]);
                 printf("input >");
             }else {
