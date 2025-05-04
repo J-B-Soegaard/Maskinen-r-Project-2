@@ -309,7 +309,11 @@ void move(node **from, char card[4], node **to) {
     if (list1 == NULL) {
         return; //hvis kortet ikke er der.
     }
-
+    /*
+    if (list1->isHidden==0) {
+        // så kort ikke kan rykke hvis de er bagsiden op ad
+    }
+    */
     if (*to == NULL && list1->card.value == 'K' && list1->next == NULL) { // hvis det er er en konge
         *to = list1;    //konge kan kun rykke hen til en tom søjle
         if (temp == list1) {
