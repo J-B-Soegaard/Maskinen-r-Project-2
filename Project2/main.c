@@ -84,12 +84,20 @@ int main(void) {
         }
         //--
         else if (str2[0]=='S'&&str2[1]=='R') {   // command til at shuffle deck
-            sprintf(&message,"deck shuffled\n");
-            SR(&deck);
-            createBoard();
-            printf("last command:%s\n",str2);
+            if (deck==NULL) {
+                sprintf(&message,"no deck loaded\n");
+                createBoard();
+                printf("last command:%s\n",str2);
                 printf("message: %s", &message[0]);
-            printf("input >");
+                printf("input >");
+            }else {
+                sprintf(&message,"deck shuffled\n");
+                SR(&deck);
+                createBoard();
+                printf("last command:%s\n",str2);
+                printf("message: %s", &message[0]);
+                printf("input >");
+            }
         }
         //--
         else if (str2[0]=='Q'&&str2[1]=='Q') { // command til at lukke program
@@ -123,31 +131,56 @@ int main(void) {
             printf("input >");
         } else if (str2[0]=='S'&&str2[1]=='I') {// splitte og samle igen
             if (numOfCmd == 2) {
-                SI(&deck,atoi(str3));
-                sprintf(&message,"deck split\n");
-                createBoard();
-                printf("last command:%s %s\n",str2,str3);
-                printf("message: %s", &message[0]);
-                printf("input >");
+                if (deck==NULL) {
+                    sprintf(&message,"Fail no deck loaded\n");
+                    createBoard();
+                    printf("last command:%s %s\n",str2,str3);
+                    printf("message: %s", &message[0]);
+                    printf("input >");
+                } else {
+                    SI(&deck,atoi(str3));
+                    sprintf(&message,"deck split\n");
+                    createBoard();
+                    printf("last command:%s %s\n",str2,str3);
+                    printf("message: %s", &message[0]);
+                    printf("input >");
+                }
+
             }else {
-                srand(time(NULL));
-                SI(&deck,rand()%51+1);
-                sprintf(&message,"no number given random number chosen\n");
+                if (deck==NULL) {
+                    sprintf(&message,"Fail no deck loaded\n");
+                    createBoard();
+                    printf("last command:%s\n",str2);
+                    printf("message: %s", &message[0]);
+                    printf("input >");
+                }else {
+                    srand(time(NULL));
+                    SI(&deck,rand()%51+1);
+                    sprintf(&message,"no number given random number chosen\n");
+                    createBoard();
+                    printf("last command:%s\n",str2);
+                    printf("message: %s", &message[0]);
+                    printf("input >");
+                }
+
+            }
+        } else if (str2[0]=='P') {
+            if (deck==NULL) {
+                sprintf(&message,"Fail no deck loaded\n");
                 createBoard();
                 printf("last command:%s\n",str2);
                 printf("message: %s", &message[0]);
                 printf("input >");
+            }else {
+                saveCard(&deck,"currentdeck.txt");
+                P(&deck);
+                LD("currentdeck.txt");
+                createBoard();
+                sprintf(&message,"game Quit\n");
+                printf("last command: Q\n");
+                printf("message: %s", &message[0]);
+                printf("input >");
             }
-        } else if (str2[0]=='P') {
-            saveCard(&deck,"currentdeck.txt");
-        P(&deck);
-        LD("currentdeck.txt");
-            createBoard();
-            sprintf(&message,"game Quit\n");
-            printf("last command: Q\n");
-            printf("message: %s", &message[0]);
-            printf("input >");
-
         }   else {   //hvis ikke nogen af de rigtige commands er brugt
             createBoard();
             sprintf(&message,"command not found\n");
