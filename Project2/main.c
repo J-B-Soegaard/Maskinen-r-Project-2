@@ -72,7 +72,12 @@ int main(void) {
         //--
         else if (str2[0]=='S'&&str2[1]=='W') {     // command til vise all kort
             SW();
-            sprintf(&message,"cards are flipped\n");
+
+            if (deck==NULL) {
+                sprintf(&message,"Fail, no deck loaded\n");
+            }else {
+                sprintf(&message,"cards are flipped\n");
+            }
             printf("last command:%s\n",str2);
                 printf("message: %s", &message[0]);
             printf("input >");
