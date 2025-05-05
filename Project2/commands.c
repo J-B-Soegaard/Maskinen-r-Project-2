@@ -335,6 +335,16 @@ void move(node **from, char card[4], node **to, char MoveMessage[100]) {
         } else {
             temp->next = NULL; //hvis from søjle ikke er tom
         }
+        sprintf(&MoveMessage[0], "OK"); //rykker kongen til en tom kolon
+        if (*from != NULL) {
+            list1 = *from;
+            while (list1->next != NULL) {
+                list1 = list1->next;
+            }
+            if (list1->isHidden == 0) { // checker om det kommer et ikke vendt kort på toppen som skal vendes.
+                list1->isHidden = 1;
+            }
+        }
         return;
     }
 
@@ -349,9 +359,32 @@ void move(node **from, char card[4], node **to, char MoveMessage[100]) {
                 list2->next = list1;
                 if (temp == list1) {
                     *from = NULL;
+                    sprintf(&MoveMessage[0], "OK"); // rykker til F1
+                    if (*from != NULL) {
+                        list1 = *from;
+                        while (list1->next != NULL) {
+                            list1 = list1->next;
+                        }
+                        if (list1->isHidden == 0) { // checker om det kommer et ikke vendt kort på toppen som skal vendes.
+                            list1->isHidden = 1;
+                        }
+                    }
+                    return;
                 } else {
                     temp->next = NULL;
+                    sprintf(&MoveMessage[0], "OK"); // rykker til F1
+                    if (*from != NULL) {
+                        list1 = *from;
+                        while (list1->next != NULL) {
+                            list1 = list1->next;
+                        }
+                        if (list1->isHidden == 0) { // checker om det kommer et ikke vendt kort på toppen som skal vendes.
+                            list1->isHidden = 1;
+                        }
+                    }
+                    return;
                 }
+
             }
         } else if (list2->isHidden == 3 && list1->card.suit == 'D') {// hvis F2
             while (list2->next != NULL) {
@@ -361,8 +394,30 @@ void move(node **from, char card[4], node **to, char MoveMessage[100]) {
                 list2->next = list1;
                 if (temp == list1) {
                     *from = NULL;
+                    sprintf(&MoveMessage[0], "OK"); // rykker til F2
+                    if (*from != NULL) {
+                        list1 = *from;
+                        while (list1->next != NULL) {
+                            list1 = list1->next;
+                        }
+                        if (list1->isHidden == 0) { // checker om det kommer et ikke vendt kort på toppen som skal vendes.
+                            list1->isHidden = 1;
+                        }
+                    }
+                    return;
                 } else {
                     temp->next = NULL;
+                    sprintf(&MoveMessage[0], "OK"); // rykker til F2
+                    if (*from != NULL) {
+                        list1 = *from;
+                        while (list1->next != NULL) {
+                            list1 = list1->next;
+                        }
+                        if (list1->isHidden == 0) { // checker om det kommer et ikke vendt kort på toppen som skal vendes.
+                            list1->isHidden = 1;
+                        }
+                    }
+                    return;
                 }
             }
         } else if (list2->isHidden == 4 && list1->card.suit == 'H') { //hvis F3
@@ -376,6 +431,17 @@ void move(node **from, char card[4], node **to, char MoveMessage[100]) {
                 } else {
                     temp->next = NULL;
                 }
+                sprintf(&MoveMessage[0], "OK"); // rykker til F3
+                if (*from != NULL) {
+                    list1 = *from;
+                    while (list1->next != NULL) {
+                        list1 = list1->next;
+                    }
+                    if (list1->isHidden == 0) { // checker om det kommer et ikke vendt kort på toppen som skal vendes.
+                        list1->isHidden = 1;
+                    }
+                }
+                return;
             }
         } else if (list2->isHidden == 5 && list1->card.suit == 'S') { //hvis F4
             while (list2->next != NULL) {
@@ -388,7 +454,21 @@ void move(node **from, char card[4], node **to, char MoveMessage[100]) {
                 } else {
                     temp->next = NULL;
                 }
+                sprintf(&MoveMessage[0], "OK"); // rykker til
+                if (*from != NULL) {
+                    list1 = *from;
+                    while (list1->next != NULL) {
+                        list1 = list1->next;
+                    }
+                    if (list1->isHidden == 0) { // checker om det kommer et ikke vendt kort på toppen som skal vendes.
+                        list1->isHidden = 1;
+                    }
+                }
+                return;
             }
+        }else {
+            sprintf(&MoveMessage[0], "fejl kort passer ikke i fonditon"); //  hvis list2 er en fond men kortet ikke passer.
+            return;
         }
     }
 
@@ -404,6 +484,10 @@ void move(node **from, char card[4], node **to, char MoveMessage[100]) {
         } else {
             temp->next = NULL;
         }
+        sprintf(&MoveMessage[0], "OK"); // rykker til til kolon
+    } else {
+        sprintf(&MoveMessage[0], "fejl kortet passer ikke."); // rykker til
+        return;
     }
 
     if (*from != NULL) { 
