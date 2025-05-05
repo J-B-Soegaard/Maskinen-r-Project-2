@@ -61,13 +61,13 @@ void createBoard(void) { // fungere kun til startup phase
     int fCounter = 1;
     int numberF=0;
     if (deck == NULL) {
-        printf("\t\t\t\t\t\t\t\t[]\tf1\n");
+        printf("\t\t\t\t\t\t\t\t\t[]\tf1\n");
         printf("\t\t\t\t\t\t\t\t\n");
-        printf("\t\t\t\t\t\t\t\t[]\tf2\n");
+        printf("\t\t\t\t\t\t\t\t\t[]\tf2\n");
         printf("\t\t\t\t\t\t\t\t\n");
-        printf("\t\t\t\t\t\t\t\t[]\tf3\n");
+        printf("\t\t\t\t\t\t\t\t\t[]\tf3\n");
         printf("\t\t\t\t\t\t\t\t\n");
-        printf("\t\t\t\t\t\t\t\t[]\tf4\n");
+        printf("\t\t\t\t\t\t\t\t\t[]\tf4\n");
         printf("\t\t\t\t\t\t\t\t\n");
     }
     for (node* curr = deck; curr != NULL; curr = curr->next) {

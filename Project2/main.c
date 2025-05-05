@@ -16,15 +16,7 @@ int main(void) {
     char str2[4];
     char str3[100];
 
-    printf("c1\tc2\tc3\tc4\tc5\tc6\tc7\n\n");
-    printf("\t\t\t\t\t\t\t\t[]\tf1\n");
-    printf("\t\t\t\t\t\t\t\t\n");
-    printf("\t\t\t\t\t\t\t\t[]\tf2\n");
-    printf("\t\t\t\t\t\t\t\t\n");
-    printf("\t\t\t\t\t\t\t\t[]\tf3\n");
-    printf("\t\t\t\t\t\t\t\t\n");
-    printf("\t\t\t\t\t\t\t\t[]\tf4\n");
-    printf("\t\t\t\t\t\t\t\t\n");
+   createBoard();
     printf("last command:%s\n",str2);
     printf("message: %s", &message[0]);
     printf("input >");
