@@ -326,10 +326,11 @@ void move(node **from, char card[4], node **to) {
 
 
     if (list2->card.value == '[' && list2->card.suit == ']' && list1->next == NULL) { //hvis det er en funndation
-        while (list2->next != NULL) {
-            list2 = list2->next;
-        }
+
         if (list2->isHidden == 2 && list1->card.suit == 'C') { //hvis F1 bruger isHidden til at se forskel
+            while (list2->next != NULL) {
+                list2 = list2->next;
+            }
             if (list1->card.value == 'A' || list2->card.value == listOfValues[i - 1]) {
                 list2->next = list1;
                 if (temp == list1) {
@@ -339,6 +340,9 @@ void move(node **from, char card[4], node **to) {
                 }
             }
         } else if (list2->isHidden == 3 && list1->card.suit == 'D') {// hvis F2
+            while (list2->next != NULL) {
+                list2 = list2->next;
+            }
             if (list1->card.value == 'A' || list2->card.value == listOfValues[i - 1]) {
                 list2->next = list1;
                 if (temp == list1) {
@@ -348,6 +352,9 @@ void move(node **from, char card[4], node **to) {
                 }
             }
         } else if (list2->isHidden == 4 && list1->card.suit == 'H') { //hvis F3
+            while (list2->next != NULL) {
+                list2 = list2->next;
+            }
             if (list1->card.value == 'A' || list2->card.value == listOfValues[i - 1]) {
                 list2->next = list1;
                 if (temp == list1) {
@@ -357,6 +364,9 @@ void move(node **from, char card[4], node **to) {
                 }
             }
         } else if (list2->isHidden == 5 && list1->card.suit == 'S') { //hvis F4
+            while (list2->next != NULL) {
+                list2 = list2->next;
+            }
             if (list1->card.value == 'A' || list2->card.value == listOfValues[i - 1]) {
                 list2->next = list1;
                 if (temp == list1) {
