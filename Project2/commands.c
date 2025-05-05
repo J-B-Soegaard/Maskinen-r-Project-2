@@ -328,7 +328,7 @@ void move(node **from, char card[4], node **to, char MoveMessage[100]) {
         // så kort ikke kan rykke hvis de er bagsiden op ad
     }
     */
-    if (*to == NULL && list1->card.value == 'K' && list1->next == NULL) { // hvis det er er en konge
+    if (*to == NULL && list1->card.value == 'K' && list2 == NULL) { // hvis det er er en konge
         *to = list1;    //konge kan kun rykke hen til en tom søjle
         if (temp == list1) {
             *from = NULL; //hvis rykker fra en tom søjle til en anden
