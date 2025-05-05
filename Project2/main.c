@@ -35,7 +35,7 @@ int main(void) {
 
         //--
         if (str2[0]=='L' && str2[1]=='D') { // command til at load
-            if (deck!=NULL) {
+            if (deck!=NULL) { //hvis der allerede er et deck loaded ind.
                 free(deck);
                 deck=NULL;
             }
