@@ -695,6 +695,20 @@ void P(node** root, char MainMessage[100], char MainLastCMD[100])
    input[strcspn(input, "\n")] = 0;
      sprintf(&last_cmd[0], input);
 
+     if(strcmp(input, "EZWIN") == 0)
+     {
+         createCard(&Farr[0],"KC");
+         createCard(&Farr[1],"KH");
+         createCard(&Farr[2],"KS");
+         createCard(&Farr[3],"KD");
+
+         if (checkWin(Farr[0],Farr[1],Farr[2],Farr[3])){
+             sprintf(&MainMessage[0], "You won, well played!");
+             sprintf(&MainLastCMD[0], last_cmd);
+             break;
+         }
+     }
+
    //Tjek for Q (quit)
     if(strcmp(input, "Q") == 0 || strcmp(input, "q") == 0){		//hvis Quit så køre vi quit
       freeDeck(&C1);	//Frigør plads
