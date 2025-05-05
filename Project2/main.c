@@ -35,6 +35,10 @@ int main(void) {
 
         //--
         if (str2[0]=='L' && str2[1]=='D') { // command til at load
+            if (deck!=NULL) {
+                free(deck);
+                deck=NULL;
+            }
             if (numOfCmd == 2 && CHECK(str3) == 0) {
                 sprintf(&message,"File found!\n");
                 LD(str3);
