@@ -24,6 +24,8 @@ int main(void) {
     while (1) {
         fgets(str, 255, stdin);
         int numOfCmd = sscanf(str, "%s\n%s\n ", str2, str3);
+        char errorCard[3];
+        int errorPos;
 
         //--
         if (str2[0]=='L' && str2[1]=='D') { // command til at load
@@ -31,7 +33,7 @@ int main(void) {
                 free(deck);
                 deck=NULL;
             }
-            if (numOfCmd == 2 && CHECK(str3) == 0) {
+            if (numOfCmd == 2 && CHECK(str3, errorCard, &errorPos) == 0) {
                 sprintf(&message,"File found!\n");
                 LD(str3);
                 createBoard();
@@ -39,28 +41,28 @@ int main(void) {
                 printf("message: %s", &message[0]);
                 printf("input >");
             } else {
-                if (CHECK(str3) == 1) {
-                sprintf(&message,"ERROR: File contains duplicate cards\n"); //File har duplicated cards
-                } else if (CHECK(str3) == 2) {
-                    sprintf(&message,"ERROR: File contains more then 52 cards\n"); //Mere end 52 kort
-                } else if (CHECK(str3) == 3) {
-                    sprintf(&message,"ERROR: File contains invalid cards\n"); //fil har kort der ikke har rigtig format
-                } else if (CHECK(str3) == 4) {
+                if (CHECK(str3, errorCard, &errorPos) == 1) {
+                sprintf(&message,"ERROR: File contains duplicate cards at %d: %s, loading unshuffled\n", errorPos, errorCard); //File har duplicated cards
+                } else if (CHECK(str3, errorCard, &errorPos) == 2) {
+                    sprintf(&message,"ERROR: File contains more then 52 cards, loading unshuffled\n"); //Mere end 52 kort
+                } else if (CHECK(str3, errorCard, &errorPos) == 3) {
+                    sprintf(&message,"ERROR: File contains invalid cards at %d: %s, loading unshuffled\n", errorPos, errorCard); //fil har kort der ikke har rigtig format
+                } else if (CHECK(str3, errorCard, &errorPos) == 4) {
                     sprintf(&message,"ERROR: Unable to open check deck\n");//Kan ikke åbne unshuffeld (burde ikke ske)
                     printf("last command:%s\n",str2);
                     printf("message: %s", &message[0]);
                     printf("input >");
                     exit(0);
-                } else if (CHECK(str3) == 5) {
+                } else if (CHECK(str3, errorCard, &errorPos) == 5) {
                     sprintf(&message,"ERROR: Check deck doesn't have enough cards\n"); //Burde ikke ske
                     printf("last command:%s\n",str2);
                     printf("message: %s", &message[0]);
                     printf("input >");
                     exit(0);
-                } else if (CHECK(str3) == 6) {
-                    sprintf(&message,"ERROR: Unable to open the file\n");   //Kan ikke åbne givet fil
-                } else if (CHECK(str3) == 7) {
-                    sprintf(&message,"ERROR: File contains less then 52 cards\n"); // mindre end 52 kort
+                } else if (CHECK(str3, errorCard, &errorPos) == 6) {
+                    sprintf(&message,"ERROR: Unable to open the file, loading unshuffled\n");   //Kan ikke åbne givet fil
+                } else if (CHECK(str3, errorCard, &errorPos) == 7) {
+                    sprintf(&message,"ERROR: File contains less then 52 cards, loading unshuffled\n"); // mindre end 52 kort
                 }
                 LD("unshuffled.txt");
                 createBoard();

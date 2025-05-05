@@ -11,7 +11,7 @@
 //------------------
 node* deck = NULL; // decket kortene bliver lagt hægtet på.
 void createCard(node** root, char value[3]);
-int CHECK(char fileName[]);
+int CHECK(char fileName[], char errorCard[3], int* errorIndex);
 int checkWin(node* F1, node* F2, node* F3, node* F4);
 void LD(char fileName[])
 {
@@ -156,12 +156,11 @@ void saveCard(node** root,char name[255]) {
     fclose(fp);
 }
 //---------------
-int CHECK(char fileName[])
-{
+int CHECK(char fileName[], char errorCard[3], int* errorIndex) {
     int card_count = 0;
     char card[3];                       // til at læse kort (2 chars + '\0')
     char all_cards[52][4];              // Valid kort array + et slot for at tjekke for duplicate kort
-    int i, j;
+    int i;
 
     // Åbner vores file unshuffled.txt med alle valid kort
     FILE *file_check = fopen("unshuffled.txt", "r");
@@ -170,7 +169,7 @@ int CHECK(char fileName[])
     }
 
     while (fscanf(file_check, "%2s", card) == 1 && card_count < 52) {
-        strcpy(all_cards[card_count], card);
+        strcpy(all_cards[card_count], card); // Tilføjer alle vores kort til all_cards array
         all_cards[card_count][3] = '0'; // Sætte alle kort til '0' som betyder ikke brugt
         card_count++;
     }
@@ -194,6 +193,8 @@ int CHECK(char fileName[])
             if (strcmp(card, all_cards[i]) == 0) {
                 found = 1;
                 if (all_cards[i][3] == '1') {
+                    strcpy(errorCard, card);
+                    *errorIndex = input_count + 1;
                     fclose(fp);
                     return 1; // Duplicate kort fundet
                 } else {
@@ -204,6 +205,8 @@ int CHECK(char fileName[])
         }
 
         if (!found) {
+            strcpy(errorCard, card);
+            *errorIndex = input_count + 1;
             fclose(fp);
             return 3; // Ikke rigtigt kort (Ikke Valid kort fundet)
         }
@@ -218,7 +221,7 @@ int CHECK(char fileName[])
     fclose(fp);
 
     if (input_count < 52) {
-        return 7; // Ikke nok kort ( mindre ind 52 kort )
+        return 7; // Ikke nok kort (mindre ind 52 kort)
     }
 
     return 0; // Alt Ok (Valid deck)
@@ -301,7 +304,7 @@ void freeDeck(node **root) {
     *root = NULL;
 }
 //move funktion
-void move(node **from, char card[4], node **to) {
+void move(node **from, char card[4], node **to, char MoveMessage[100]) {
     node* list1 = *from;    //søjle det kommer fra
     node* list2 = *to;      // søjle den skal hen til.
     node* temp = list1;     //holder værdi den element før det element vi vil har fat i første list
@@ -317,6 +320,7 @@ void move(node **from, char card[4], node **to) {
         list1 = list1->next; //loop til at finde kortet i listen
     }
     if (list1 == NULL) {
+        sprintf(&MoveMessage[0], "Kortet var ikke i den colone");
         return; //hvis kortet ikke er der.
     }
     /*
@@ -456,9 +460,10 @@ void gameboard(node* collum[7],node* fonditons[4]) {
 }
 // slut gameboard
 // playphase
-void P(node** root) {
+void P(node** root)
+{
     node* C1= NULL; node* C2 = NULL; node* C3 = NULL; node* C4 = NULL; node* C5 = NULL; node* C6 = NULL; node* C7 = NULL; // all søjler
- node** c1ptr= &C1;
+    node** c1ptr= &C1;
     node** c2ptr= &C2;
     node** c3ptr= &C3;
     node** c4ptr= &C4;
@@ -506,7 +511,7 @@ void P(node** root) {
 
         }
         if (card_count<7) {
-           *c3ptr = curr;
+            *c3ptr = curr;
             if (card_count<2) { // logik til at hvilket kort skal skjules
                 curr->isHidden=0; // skjuler
             }else {
@@ -530,7 +535,7 @@ void P(node** root) {
             c4ptr = &((*c4ptr)->next);
         }
         if (card_count<9) {
-           *c5ptr = curr;
+            *c5ptr = curr;
             if (card_count<4) { // logik til at hvilket kort skal skjules
                 curr->isHidden=0; // skjuler
             }else {
@@ -554,7 +559,7 @@ void P(node** root) {
             c6ptr = &((*c6ptr)->next);
         }
         if (card_count<11) {
-           *c7ptr = curr;
+            *c7ptr = curr;
             if (card_count<6) { // logik til at hvilket kort skal skjules
                 curr->isHidden=0; // skjuler
             }else {
@@ -568,8 +573,17 @@ void P(node** root) {
         card_count++;
 
     } // slut while loop
-  //liste til at se hvad er størst.
-deck=NULL;
+    //liste til at se hvad er størst.
+    deck=NULL;
+    char message[100];
+    char last_cmd[100];
+    char MoveMessage[100];
+
+    sprintf(&message[0], "Game is ready, Good luck!\n");
+    sprintf(&last_cmd[0], "P\n");
+
+
+
  while(1){
      node* Carr[7]={C1,C2,C3,C4,C5,C6,C7}; //gameboard
      node* Farr[4]={F1,F2,F3,F4}; // til gameboard
@@ -577,11 +591,16 @@ deck=NULL;
    char FromCo[10];  // Column vi rykker fra
    char ToCo[10];    // Column vi rykker hen til
    char card[4] = "";  // Hvis der er angivet kort er det kortet vi ville rykke
+
      gameboard(Carr,Farr);
+     printf("last command:%s\n",&last_cmd[0]);
+     printf("message: %s\n", &message[0]);
+     printf("input >");
+
    if (checkWin(F1,F2,F3,F4)){
+       gameboard(Carr,Farr);
+       printf("last command:%s\n",&last_cmd[0]);
        printf("message: Congratulations, you won!\n");
-       printf("message: Type \"N\" for a New Game \n >");
-       printf("message: Type \"Q\" to Quit the Game \n >");
        printf("input >");
        break;
    // Vi breaker så ud af Void P tilbage i main hvor vi så laver et statement der venter på svar fra brugeren
@@ -590,12 +609,11 @@ deck=NULL;
    // ikke er skrevet præcist i opgaven hvad der skal ske.
      }
 
-   printf("Message: Indtast dit Move (eller Q for at Quit) \n");
-   printf("Input >");
    fgets(input, 100, stdin);
 
    //Fjern newLine
    input[strcspn(input, "\n")] = 0;
+     sprintf(&last_cmd[0], input);
 
    //Tjek for Q (quit)
     if(strcmp(input, "Q") == 0 || strcmp(input, "q") == 0){		//hvis Quit så køre vi quit
@@ -619,7 +637,7 @@ deck=NULL;
     // Split op i 'fra' og 'til' ved at splitte ved "->"
     char* arrow = strstr(input, "->");
     if (arrow == NULL) {						// Hvis ingen arrow are det forkert format og vi køre ikke koden
-      printf("Message: Ugyldigt format! Brug '->'\n");
+      sprintf(&message[0],"Ugyldigt format! Brug '->'\n");
     } else {
 
       int FromLeng = arrow - input; 		// Længten bag ved -> aka From delen (Skal meget gerne være 5 eller 2)
@@ -648,7 +666,7 @@ deck=NULL;
       else if (strcmp(FromCo, "F3") == 0) from = &F3;
       else if (strcmp(FromCo, "F4") == 0) from = &F4;
       else {
-        printf("Message: Ugyldig From \"%s\"\n", FromCo);	// Hvis input ikke er en gyldig C eller F print
+        sprintf(&message[0], "Ugyldig From \"%s\"\n", FromCo);	// Hvis input ikke er en gyldig C eller F print
           continue;
       }
 
@@ -667,13 +685,15 @@ deck=NULL;
       else if (strcmp(ToCo, "F3") == 0) to = &F3;
       else if (strcmp(ToCo, "F4") == 0) to = &F4;
       else {
-        printf("Message: Ugyldig TO: \"%s\"\n", ToCo);	// Hvis input ikke er en gyldig C eller F print
+        sprintf(&message[0],"Ugyldig TO: \"%s\"\n", ToCo);	// Hvis input ikke er en gyldig C eller F print
           continue;
       }
 
         if (to != NULL && from != NULL)
         {
-            move(from, card, to);			// Rykker de ønskede kort
+            move(from, card, to, MoveMessage);			// Rykker de ønskede kort
+            sprintf(&message[0], MoveMessage);
+            continue;
         }
     } //If-else statement slut
  } //While loop slut
