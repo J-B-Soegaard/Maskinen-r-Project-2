@@ -175,12 +175,13 @@ int main(void) {
                 printf("input >");
             }else {
                 saveCard(&deck,"currentdeck.txt");
-                P(&deck);
+                char WinMessage[100];
+                char MainLastCMD[100];
+                P(&deck, WinMessage, MainLastCMD);
                 LD("currentdeck.txt");
                 createBoard();
-                sprintf(&message,"game Quit\n");
-                printf("last command: Q\n");
-                printf("message: %s", &message[0]);
+                printf("last command: %s\n", &MainLastCMD[0]);
+                printf("message: %s\n", &WinMessage[0]);
                 printf("input >");
             }
         }   else {   //hvis ikke nogen af de rigtige commands er brugt

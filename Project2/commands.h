@@ -15,5 +15,5 @@ int CHECK(char fileName[], char errorCard[3], int* errorIndex);
 void SI(node **root, int split);
 int LastIsK(node* root);
 int checkWin(node* F1, node* F2, node* F3, node* F4);
-void P(node** root);
+void P(node** root, char MainMessage[100], char MainLastCMD[100]);
 #endif //COMMANDS_H

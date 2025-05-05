@@ -544,7 +544,7 @@ void gameboard(node* collum[7],node* fonditons[4]) {
 }
 // slut gameboard
 // playphase
-void P(node** root)
+void P(node** root, char MainMessage[100], char MainLastCMD[100])
 {
     node* C1= NULL; node* C2 = NULL; node* C3 = NULL; node* C4 = NULL; node* C5 = NULL; node* C6 = NULL; node* C7 = NULL; // all søjler
     node** c1ptr= &C1;
@@ -676,22 +676,18 @@ void P(node** root)
    char ToCo[10];    // Column vi rykker hen til
    char card[4] = "";  // Hvis der er angivet kort er det kortet vi ville rykke
 
+     if (checkWin(F1,F2,F3,F4)){
+         sprintf(&MainMessage[0], "You won, well played!");
+         sprintf(&MainLastCMD[0], last_cmd);
+         break;
+     }
+
      gameboard(Carr,Farr);
      printf("last command:%s\n",&last_cmd[0]);
      printf("message: %s\n", &message[0]);
      printf("input >");
 
-   if (checkWin(F1,F2,F3,F4)){
-       gameboard(Carr,Farr);
-       printf("last command:%s\n",&last_cmd[0]);
-       printf("message: Congratulations, you won!\n");
-       printf("input >");
-       break;
-   // Vi breaker så ud af Void P tilbage i main hvor vi så laver et statement der venter på svar fra brugeren
-   // der kan vi lave if statement der hvis vi for N går tilbage til startup phase ellers Q for at quit helt
-   // Jeg synes det er bedst sådan for at give spilleren et præcis overblik over hvad der sker når man vinder  da dette
-   // ikke er skrevet præcist i opgaven hvad der skal ske.
-     }
+
 
    fgets(input, 100, stdin);
 
@@ -712,9 +708,8 @@ void P(node** root)
       freeDeck(&F2);
       freeDeck(&F3);
       freeDeck(&F4);
-      // Når vi kommer tilbage i main kan vi printe:
-      // sprintf(&message,"Quit Game. Deck has been saved. Use LD saved_deck\n");
-      // Noget i den stil yk
+        sprintf(&MainMessage[0], "Quit and saved current deck");
+        sprintf(&MainLastCMD[0], last_cmd);
       return;
     }
 
