@@ -310,6 +310,14 @@ void move(node **from, char card[4], node **to, char MoveMessage[100]) {
     node* temp = list1;     //holder værdi den element før det element vi vil har fat i første list
     const char listOfValues[13] = {'A','2','3','4','5','6','7','8','9','T','J','Q','K'};
     int i = 0;
+    if (card[0]=='\0') { // hvis der bliver skrevet feks. C1->F1
+        while (list1->next!= NULL) {
+            list1 = list1->next; // finder sidste kort
+        }
+        card[0]=list1->card.value; //putter værdierne ind
+        card[1]=list1->card.suit;
+        list1 = *from; // sætter list tilbage til pointe på from.
+    }
 
     while (card[0] != listOfValues[i] && i != 12) {
         i++; //loop til at finde det korts værdi
