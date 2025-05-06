@@ -478,9 +478,13 @@ void move(node **from, char card[4], node **to, char MoveMessage[100]) {
 
 
     if (list1->card.suit != list2->card.suit && list2->card.value == listOfValues[i + 1]) { //checker om det er et lovligt move
+        if (list1->isHidden==0) { //hvis spiller prøver at rykke et kort der ikke er vendt om.
+            sprintf(&MoveMessage[0], "fejl kortet passer ikke.(kort er ikke vendt om)");
+            return;
+        }
         list2->next = list1;
         if (temp == list1) {
-            temp = NULL;
+            *from = NULL;
         } else {
             temp->next = NULL;
         }
@@ -509,12 +513,12 @@ void gameboard(node* collum[7],node* fonditons[4]) {
     node* c5=collum[4];
     node* c6=collum[5];
     node* c7=collum[6];
-    node* række[]={c1,c2,c3,c4,c5,c6,c7};
+    node* række[]={c1,c2,c3,c4,c5,c6,c7}; //søjler
     node* fond1=fonditons[0];
     node* fond2=fonditons[1];
     node* fond3=fonditons[2];
     node* fond4=fonditons[3];
-    node* fondArr[4]={fond1,fond2,fond3,fond4};
+    node* fondArr[4]={fond1,fond2,fond3,fond4}; // fondations
     int j=0;
     printf("\nc1\tc2\tc3\tc4\tc5\tc6\tc7\n\n");
     int counter = 1;
@@ -672,9 +676,9 @@ void P(node** root, char MainMessage[100], char MainLastCMD[100])
      node* Carr[7]={C1,C2,C3,C4,C5,C6,C7}; //gameboard
      node* Farr[4]={F1,F2,F3,F4}; // til gameboard
    char input[100];
-   char FromCo[10];  // Column vi rykker fra
-   char ToCo[10];    // Column vi rykker hen til
-   char card[4] = "";  // Hvis der er angivet kort er det kortet vi ville rykke
+   char FromCo[100];  // Column vi rykker fra
+   char ToCo[100];    // Column vi rykker hen til
+   char card[100] = "";  // Hvis der er angivet kort er det kortet vi ville rykke
 
      if (checkWin(F1,F2,F3,F4)){
          sprintf(&MainMessage[0], "You won, well played!");
