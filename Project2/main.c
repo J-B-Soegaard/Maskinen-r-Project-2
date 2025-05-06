@@ -41,7 +41,10 @@ int main(void) {
                 printf("message: %s", &message[0]);
                 printf("input >");
             } else {
-                if (CHECK(str3, errorCard, &errorPos) == 1) {
+                if (numOfCmd==1)
+                {
+                    sprintf(&message,"Loaded Standard deck\n");
+                } else if (CHECK(str3, errorCard, &errorPos) == 1) {
                 sprintf(&message,"ERROR: File contains duplicate cards at %d: %s, loading unshuffled\n", errorPos, errorCard); //File har duplicated cards
                 } else if (CHECK(str3, errorCard, &errorPos) == 2) {
                     sprintf(&message,"ERROR: File contains more then 52 cards, loading unshuffled\n"); //Mere end 52 kort
