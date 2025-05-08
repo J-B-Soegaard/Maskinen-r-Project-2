@@ -15,6 +15,7 @@ int CHECK(char fileName[], char errorCard[3], int* errorIndex);
 int checkWin(node* F1, node* F2, node* F3, node* F4);
 void LD(char fileName[])
 {
+
     char temp[4];
     FILE *fp;
 

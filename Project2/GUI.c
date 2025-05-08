@@ -7,18 +7,19 @@
 #include <SDL2/SDL_ttf.h>
 #include <stdbool.h>
 #include <stdlib.h>
-
+#include "commands.h"
+#include "structures.h"
 //
 
-void drawColumn(SDL_Renderer* renderer, TTF_Font* font, node* head, int startX, int startY) {
+void drawColumn(SDL_Renderer* renderer, TTF_Font* font, node* root, int startX, int startY) {
     const int cardWidth = 40;
     const int cardHeight = 55;
     const int cardSpacing = 36;
 
     int y = startY;
-    node* current = head;
+    node* current = root;
 
-    while (current) {
+    while (current!=NULL) {
         SDL_Rect cardRect = {startX, y, cardWidth, cardHeight};
 
         if (current->isHidden==0) {
@@ -28,7 +29,7 @@ void drawColumn(SDL_Renderer* renderer, TTF_Font* font, node* head, int startX, 
             SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);  // hvid forside
             SDL_RenderFillRect(renderer, &cardRect);
 
-            char label[4] = {current->card.value, current->card.suit, '\0'};
+            char label[4] = {current->card.value, current->card.suit};
 
             SDL_Color textColor;
             if (current->card.suit == 'S' || current->card.suit == 'C') {
@@ -41,7 +42,7 @@ void drawColumn(SDL_Renderer* renderer, TTF_Font* font, node* head, int startX, 
             SDL_Surface* surface = TTF_RenderText_Blended(font, label, textColor);
             SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
 
-            SDL_Rect textRect = {
+           SDL_Rect textRect = {
                 startX + (cardWidth - surface->w) / 2,
                 y + (cardHeight - surface->h) / 2,
                 surface->w, surface->h
@@ -55,7 +56,7 @@ void drawColumn(SDL_Renderer* renderer, TTF_Font* font, node* head, int startX, 
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255); // sort kant
         SDL_RenderDrawRect(renderer, &cardRect);
 
-        y += cardSpacing;
+        y = y+cardSpacing;
         current = current->next;
     }
 }
@@ -96,7 +97,7 @@ void updateFond(SDL_Renderer* renderer, TTF_Font* font, node* head, int X, int Y
 }
 //
 
-void P(node** root) {
+void Pgui(node** root) {
     node* C1= NULL; node* C2 = NULL; node* C3 = NULL; node* C4 = NULL; node* C5 = NULL; node* C6 = NULL; node* C7 = NULL; // all søjler
  node** c1ptr= &C1;
     node** c2ptr= &C2;
@@ -226,9 +227,9 @@ deck=NULL;
     if (!font) {
         SDL_Log("Kunne ikke indlæse font: %s", TTF_GetError());
     }
-    sdlInitialized = 1;
-
- while(1){
+    sdlInitialized = true;
+    bool running = true;
+ while(running) {
      node* Carr[7]={C1,C2,C3,C4,C5,C6,C7}; //gameboard
      node* Farr[4]={F1,F2,F3,F4}; // til gameboard
    char input[100];
@@ -236,28 +237,32 @@ deck=NULL;
    char ToCo[10];    // Column vi rykker hen til
    char card[4] = "";  // Hvis der er angivet kort er det kortet vi ville rykke
 
+     char MoveMessage[100];
+
      //
      //  GUI del
+     SDL_Event event;
      SDL_SetRenderDrawColor(renderer, 0, 100, 0, 255);  // grøn baggrund
      SDL_RenderClear(renderer);  // Ryd skærmen først!
 
-     drawColumn(renderer, font, C1, 100, 100);
-     drawColumn(renderer, font, C2, 170, 100);
-     drawColumn(renderer, font, C3, 240, 100);
-     drawColumn(renderer, font, C4, 310, 100);
-     drawColumn(renderer, font, C5, 380, 100);
-     drawColumn(renderer, font, C6, 450, 100);
-     drawColumn(renderer, font, C7, 520, 100);
+     drawColumn(renderer, font, C1, 100, 50);
+     drawColumn(renderer, font, C2, 170, 50);
+     drawColumn(renderer, font, C3, 240, 50);
+     drawColumn(renderer, font, C4, 310, 50);
+     drawColumn(renderer, font, C5, 380, 50);
+     drawColumn(renderer, font, C6, 450, 50);
+     drawColumn(renderer, font, C7, 520, 50);
      updateFond(renderer, font, F1, 700, 100);
      updateFond(renderer, font, F2, 700, 200);
      updateFond(renderer, font, F3, 700, 300);
      updateFond(renderer, font, F4, 700, 400);
 
      SDL_RenderPresent(renderer); // viser kortene på banen
-     SDL_Event event;
+
+
      while (SDL_PollEvent(&event)) {
          if (event.type == SDL_QUIT) {
-             // Clean up SDL resources
+             running = false;
              if (sdlInitialized) {
                  TTF_CloseFont(font);
                  TTF_Quit();
@@ -314,13 +319,14 @@ deck=NULL;
       freeDeck(&F2);
       freeDeck(&F3);
       freeDeck(&F4);
-        if (sdlInitialized) { // lukker vinduet
+         // lukker vinduet
+        running = false;
             TTF_CloseFont(font);
             TTF_Quit();
             SDL_DestroyRenderer(renderer);
             SDL_DestroyWindow(window);
             SDL_Quit();
-        }
+
 
       // Når vi kommer tilbage i main kan vi printe:
       // sprintf(&message,"Quit Game. Deck has been saved. Use LD saved_deck\n");
@@ -385,25 +391,14 @@ deck=NULL;
 
         if (to != NULL && from != NULL)
         {
-            move(from, card, to);			// Rykker de ønskede kort
+            move(from, card, to, MoveMessage);
         }
     } //If-else statement slut
+
  } //While loop slut
 
 }
 
-int LastIsK(node* root) {
-    if (root == NULL) return 0; // Hvis bunken er tom behøver vi ikke tjekke og retunere 0 (false)
 
-    while (root->next != NULL) {	// Find det sidste kort
-        root = root->next;
-    }
-
-    return (root->card.value == 'K');	// Hvis det sidste kort er en konge retunere vi 1 (true)
-}
-
-int checkWin(node* F1, node* F2, node* F3, node* F4) {
-    return LastIsK(F1) && LastIsK(F2) && LastIsK(F3) && LastIsK(F4); // Retunere 1 hvis alle F's sidste kort er K ellers 0
-}
 
 //

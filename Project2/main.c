@@ -4,7 +4,7 @@
 #include "commands.h"
 #include <time.h>
 #include "structures.h"
-
+#include "GUI.h"
 
 
 
@@ -187,7 +187,18 @@ int main(void) {
                 printf("message: %s\n", &WinMessage[0]);
                 printf("input >");
             }
-        }   else {   //hvis ikke nogen af de rigtige commands er brugt
+        } else if (str2[0]=='G') {
+            saveCard(&deck,"currentdeck.txt");
+            char WinMessage[100];
+            char MainLastCMD[100];
+            Pgui(&deck);
+            LD("currentdeck.txt");
+            createBoard();
+            printf("last command: %s\n", &MainLastCMD[0]);
+            printf("message: %s\n", &WinMessage[0]);
+            printf("input >");
+        }
+        else {   //hvis ikke nogen af de rigtige commands er brugt
             createBoard();
             sprintf(&message,"command not found\n");
             printf("last command:%s\n",str2);

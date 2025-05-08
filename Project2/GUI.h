@@ -4,5 +4,6 @@
 
 #ifndef GUI_H
 #define GUI_H
-
+#include "structures.h"
+void Pgui(node** root);
 #endif //GUI_H
