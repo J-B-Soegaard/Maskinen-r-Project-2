@@ -691,28 +691,30 @@ void P(node** root, char MainMessage[100], char MainLastCMD[100])
    char ToCo[100];    // Column vi rykker hen til
    char card[100] = "";  // Hvis der er angivet kort er det kortet vi ville rykke
 
-     if (checkWin(F1,F2,F3,F4)){
+     if (checkWin(F1,F2,F3,F4)){                // Check for win condition er opfyldt
          sprintf(&MainMessage[0], "You won, well played!");
          sprintf(&MainLastCMD[0], last_cmd);
          break;
      }
 
      gameboard(Carr,Farr);
-     printf("last command:%s\n",&last_cmd[0]);
+     printf("last command:%s\n",&last_cmd[0]);      // Display gameboard og display last kommando og besked
      printf("message: %s\n", &message[0]);
      printf("input >");
 
 
 
-   fgets(input, 100, stdin);
+   fgets(input, 100, stdin);            // Få brugens input
 
    //Fjern newLine
    input[strcspn(input, "\n")] = 0;
      sprintf(&last_cmd[0], input);
 
+
+     // Dette er en command der bliver brugt til at tjekke om man faktisk kan vinde spillet
      if(strcmp(input, "EZWIN") == 0)
      {
-         createCard(&Farr[0],"KC");
+         createCard(&Farr[0],"KC");         // Ved at force alle F til at holde en kong
          createCard(&Farr[1],"KH");
          createCard(&Farr[2],"KS");
          createCard(&Farr[3],"KD");

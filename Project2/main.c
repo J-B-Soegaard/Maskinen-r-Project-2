@@ -28,7 +28,7 @@ int main(void) {
         int errorPos;
 
         //--
-        if (str2[0]=='L' && str2[1]=='D') { // command til at load
+        if (strcmp(str2, "LD") == 0) { // command til at load
             if (deck!=NULL) { //hvis der allerede er et deck loaded ind.
                 free(deck);
                 deck=NULL;
@@ -75,7 +75,7 @@ int main(void) {
             }
         }
         //--
-        else if (str2[0]=='S'&&str2[1]=='W') {     // command til vise all kort
+        else if (strcmp(str2, "SW") == 0) {     // command til vise all kort
             SW();
 
             if (deck==NULL) {
@@ -88,7 +88,7 @@ int main(void) {
             printf("input >");
         }
         //--
-        else if (str2[0]=='S'&&str2[1]=='R') {   // command til at shuffle deck
+        else if (strcmp(str2, "SR") == 0) {   // command til at shuffle deck
             if (deck==NULL) {
                 sprintf(&message,"no deck loaded\n");
                 createBoard();
@@ -105,11 +105,11 @@ int main(void) {
             }
         }
         //--
-        else if (str2[0]=='Q'&&str2[1]=='Q') { // command til at lukke program
+        else if (strcmp(str2, "QQ") == 0) { // command til at lukke program
             printf("Quit the program");
             exit(0);
         }
-        else if (str2[0]=='S'&&str2[1]=='D') {// command til at gemme deck}
+        else if (strcmp(str2, "SD") == 0) {// command til at gemme deck}
             if (numOfCmd == 2) {
                 if (deck==NULL) {
                     printf("last command:%s %s\n",str2,str3);
@@ -134,7 +134,7 @@ int main(void) {
             printf("last command:%s\n",str2);
             printf("message: %s", &message[0]);
             printf("input >");
-        } else if (str2[0]=='S'&&str2[1]=='I') {// splitte og samle igen
+        } else if (strcmp(str2, "SI") == 0) {// splitte og samle igen
             if (numOfCmd == 2) {
                 if (deck==NULL) {
                     sprintf(&message,"Fail no deck loaded\n");
@@ -175,25 +175,25 @@ int main(void) {
                 }
 
             }
-        } else if (str2[0]=='P') {
-            if (deck==NULL) {
+        } else if (strcmp(str2, "P") == 0) {
+            if (deck==NULL) {           // Hvis intet deck er loaded kan man ikke spille
                 sprintf(&message,"Fail no deck loaded\n");
                 createBoard();
                 printf("last command:%s\n",str2);
                 printf("message: %s", &message[0]);
                 printf("input >");
-            }else {
+            }else {                                     // Spil med det givet deck
                 saveCard(&deck,"currentdeck.txt");
-                char WinMessage[100];
-                char MainLastCMD[100];
-                P(&deck, WinMessage, MainLastCMD);
+                char WinMessage[100];           // Strings der bliver brugt til at kunne give den rigtige besked fra P
+                char MainLastCMD[100];          // Som er afhænigt om man vandt eller quittede
+                P(&deck, WinMessage, MainLastCMD);  // Enter game phase
                 LD("currentdeck.txt");
                 createBoard();
                 printf("last command: %s\n", &MainLastCMD[0]);
                 printf("message: %s\n", &WinMessage[0]);
                 printf("input >");
             }
-        } else if (str2[0]=='G') {
+        } else if (strcmp(str2, "G") == 0) {            // Ved brug af "G" kommando kan vi gå ind i den del der bruger GUI
             saveCard(&deck,"currentdeck.txt");
             char WinMessage[100];
             char MainLastCMD[100];

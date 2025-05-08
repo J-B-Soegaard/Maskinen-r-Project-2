@@ -2,9 +2,11 @@
 // Created by Jacob Søgaard on 07/05/2025.
 //
 
+#include <stdio.h>
+#include <string.h>
 #include "GUI.h"
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_ttf.h>
+#include <SDL.h>
+#include <SDL_ttf.h>
 #include <stdbool.h>
 #include <stdlib.h>
 #include "commands.h"
@@ -223,7 +225,7 @@ deck=NULL;
     window = SDL_CreateWindow("Yukon",
         SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, 0);
     renderer = SDL_CreateRenderer(window, -1, 0);
-    font = TTF_OpenFont("/System/Library/Fonts/Supplemental/Arial.ttf", 24);
+    font = TTF_OpenFont("C:\\Windows\\Fonts\\arial.ttf", 24);
     if (!font) {
         SDL_Log("Kunne ikke indlæse font: %s", TTF_GetError());
     }
@@ -301,7 +303,21 @@ deck=NULL;
 
    printf("Message: Indtast dit Move (eller Q for at Quit) \n");
    printf("Input >");
-   fgets(input, 100, stdin);
+     // Før fgets, tilføj dette lille loop:
+     for (int wait = 0; wait < 300; wait++) {
+         SDL_Event event;
+         while (SDL_PollEvent(&event)) {
+             if (event.type == SDL_QUIT) {
+                 running = false;
+                 // Luk SDL rent her hvis du vil
+                 return;
+             }
+         }
+         SDL_Delay(10); // Giv lidt CPU-tid tilbage
+     }
+
+     // Nu kan du bruge fgets som normalt
+     fgets(input, 100, stdin);
 
    //Fjern newLine
    input[strcspn(input, "\n")] = 0;
