@@ -113,7 +113,9 @@ void SI(node **root, int split) {
     node *curr = deck;
     node *deck2 = NULL;
     int i = 0;
-
+    if (split>52) {
+        return;
+    }
     while (i < split - 1) {
 
         curr = curr->next;

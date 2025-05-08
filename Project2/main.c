@@ -142,7 +142,13 @@ int main(void) {
                     printf("last command:%s %s\n",str2,str3);
                     printf("message: %s", &message[0]);
                     printf("input >");
-                } else {
+                }else if (atoi(str3)>52) {
+                    sprintf(&message,"number too high\n");
+                    createBoard();
+                    printf("last command:%s %s\n",str2,str3);
+                    printf("message: %s", &message[0]);
+                    printf("input >");
+                }else {
                     SI(&deck,atoi(str3));
                     sprintf(&message,"deck split\n");
                     createBoard();
